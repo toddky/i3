@@ -41,9 +41,6 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
@@ -62,7 +59,7 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # Syntax: default_orientation horizontal|vertical|auto
 default_orientation vertical
 # Syntax: workspace_layout default|stacking|tabbed
-workspace_layout stacking
+workspace_layout default
 
 
 # ==============================================================================
@@ -100,12 +97,17 @@ workspace_auto_back_and_forth yes
 # ==============================================================================
 # MONITORS
 # ==============================================================================
-bindsym $mod+braceleft    focus output left
-bindsym $mod+braceright   focus output right
-# bindsym $mod+bracketleft  move workspace to output left
-# bindsym $mod+bracketright move workspace to output right
-bindsym $mod+Shift+braceleft  move workspace to output left
-bindsym $mod+Shift+braceright move workspace to output right
+bindsym $mod+comma  focus output left
+bindsym $mod+period focus output right
+bindsym $mod+Shift+comma  move workspace to output left
+bindsym $mod+Shift+period move workspace to output right
+
+#bindsym $mod+braceleft  focus output left
+#bindsym $mod+braceright focus output right
+#bindsym $mod+bracketleft  move workspace to output left
+#bindsym $mod+bracketright move workspace to output right
+#bindsym $mod+Shift+braceleft  move workspace to output left
+#bindsym $mod+Shift+braceright move workspace to output right
 
 
 # ==============================================================================
@@ -113,13 +115,15 @@ bindsym $mod+Shift+braceright move workspace to output right
 # ==============================================================================
 
 # Switch workspace on current monitor
-bindsym $mod+comma  workspace prev_on_output
-bindsym $mod+period workspace next_on_output
+#bindsym $mod+comma  workspace prev_on_output
+#bindsym $mod+period workspace next_on_output
+bindsym $mod+shift+h workspace prev_on_output
+bindsym $mod+shift+l workspace next_on_output
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
-set $ws2 "2:Gmail"
+set $ws2 "2 Gmail"
 set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
@@ -130,16 +134,16 @@ set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace number $ws1
-bindsym $mod+2 workspace number $ws2
-bindsym $mod+3 workspace number $ws3
-bindsym $mod+4 workspace number $ws4
-bindsym $mod+5 workspace number $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
+bindsym $mod+1 exec --no-startup-id i3-select $ws1
+bindsym $mod+2 exec --no-startup-id i3-select $ws2
+bindsym $mod+3 exec --no-startup-id i3-select $ws3
+bindsym $mod+4 exec --no-startup-id i3-select $ws4
+bindsym $mod+5 exec --no-startup-id i3-select $ws5
+bindsym $mod+6 exec --no-startup-id i3-select $ws6
+bindsym $mod+7 exec --no-startup-id i3-select $ws7
+bindsym $mod+8 exec --no-startup-id i3-select $ws8
+bindsym $mod+9 exec --no-startup-id i3-select $ws9
+bindsym $mod+0 exec --no-startup-id i3-select $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -166,16 +170,12 @@ bindsym $mod+h     focus left
 bindsym $mod+j     focus down
 bindsym $mod+k     focus up
 bindsym $mod+l     focus right
-bindsym $mod+Left  focus left
-bindsym $mod+Down  focus down
-bindsym $mod+Up    focus up
-bindsym $mod+Right focus right
 
 # Move window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
 
 
 # ==============================================================================
@@ -191,14 +191,14 @@ bindsym $mod+s split h
 # split in vertical orientation
 bindsym $mod+v split v
 
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+m mode "mode"
-mode "mode" {
-	bindsym 1 layout stacking
-	bindsym 2 layout tabbed
-	bindsym 3 layout toggle split
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+# Change container layout
+bindsym $mod+m mode "layout"
+mode "layout" {
+	bindsym 1 layout tabbed
+	bindsym 2 layout stacking
+	bindsym 3 layout splith
+	bindsym 4 layout splitv
+
 	bindsym $mod+m mode "default"
 	bindsym q      mode "default"
 }
@@ -216,7 +216,7 @@ bindsym $mod+u focus parent
 #bindsym $mod+d focus child
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -267,5 +267,22 @@ bar {
 # button5: Scroll wheel down
 # button6: Scroll wheel right
 # button7: Scroll wheel left
+
+
+# ==============================================================================
+# FLOATING
+# ==============================================================================
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+default_floating_border normal 3
+
+#floating_minimum_size <width> x <height>
+#floating_maximum_size <width> x <height>
+#floating_minimum_size 75 x 50
+#floating_maximum_size -1 x -1
+
+
 
 
