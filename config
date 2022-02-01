@@ -57,7 +57,7 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # SETTINGS
 # ==============================================================================
 # Syntax: default_orientation horizontal|vertical|auto
-default_orientation vertical
+default_orientation horizontal
 # Syntax: workspace_layout default|stacking|tabbed
 workspace_layout default
 
@@ -67,8 +67,26 @@ focus_wrapping no
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	status_command i3status
+	position bottom
+	#status_command i3status
+	status_command i3blocks -c ~/.config/i3/i3blocks.conf
 }
+
+set $focused-bg-color     #3060a0
+set $inactive-bg-color    #204070
+set $unfocused-bg-color   #002040
+set $urgent-bg-color      #f04040
+set $focused-text-color   #f0f0f0
+set $inactive-text-color  #d0d0d0
+set $unfocused-text-color #b0b0b0
+set $urgent-text-color    #f0f0f0
+set $indicator-color      $bg-color
+
+# Widow Colors          border              background          text                  indicator
+client.focused          $focused-bg-color   $focused-bg-color   $focused-text-color   $indicator-color
+client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-color  $indicator-color
+client.unfocused        $unfocused-bg-color $unfocused-bg-color $unfocused-text-color $indicator-color
+client.urgent           $urgent-bg-color    $urgent-bg-color    $urgent-text-color    $indicator-color
 
 
 # ==============================================================================
@@ -142,6 +160,7 @@ bindsym $mod+shift+k workspace prev_on_output
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
 #set $ws2 "2 Mail"
+#set $ws2 "2"
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
@@ -164,9 +183,11 @@ bindsym $mod+8 exec --no-startup-id i3-select "$ws8"
 bindsym $mod+9 exec --no-startup-id i3-select "$ws9"
 bindsym $mod+0 exec --no-startup-id i3-select "$ws10"
 
-# Rename: workspace
-bindsym $mod+shift+r exec i3-input -F 'exec i3-rename %s' -P 'rename: '
+# Rename workspace
+bindsym $mod+shift+r exec --no-startup-id i3-input -F 'exec i3-rename %s' -P 'rename: '
 
+# New workspace
+bindsym $mod+shift+n exec --no-startup-id i3-new
 
 # ==============================================================================
 # WINDOW
@@ -287,4 +308,13 @@ default_floating_border normal 3
 # SPECIAL
 # ==============================================================================
 bindsym $mod+a focus output primary; exec i3-select "$ws2"
+
+bindsym $mod+shift+p exec --no-startup-id ,screenshot
+
+# TODO: This was a chat notification:
+#assign [class="Dunst"] $workspace
+
+# Add fade and transition effects
+# sudo apt install compton
+exec compton -f
 
