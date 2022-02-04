@@ -65,7 +65,8 @@ default_orientation horizontal
 # Syntax: workspace_layout default|stacking|tabbed
 workspace_layout default
 
-focus_wrapping no
+# focus_wrapping yes|no|force|workspace
+focus_wrapping workspace
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -84,7 +85,7 @@ set $focused-text-color   #f0f0f0
 set $inactive-text-color  #d0d0d0
 set $unfocused-text-color #b0b0b0
 set $urgent-text-color    #f0f0f0
-set $indicator-color      $bg-color
+set $indicator-color      $focused-bg-color
 
 # Window Colors         border              background          text                  indicator
 client.focused          $focused-bg-color   $focused-bg-color   $focused-text-color   $indicator-color
@@ -100,15 +101,32 @@ client.urgent           $urgent-bg-color    $urgent-bg-color    $urgent-text-col
 # Open Chrome
 bindsym $mod+n exec --no-startup-id /opt/google/chrome/chrome
 
-# The middle button over a titlebar kills the window
-bindsym --release button2 kill
-
 # The middle button and a modifer over any part of the window kills the window
 bindsym --whole-window $mod+button2 kill
 
 # The right button toggles floating
 bindsym button3 floating toggle
 bindsym $mod+button3 floating toggle
+
+# %title
+# - _NET_WM_NAME or WM_NAME as fallback
+# - The X11 window title
+# - The tree representation for window-less container (e.g., "H[xterm xterm]").
+# %class
+# - The second part of WM_CLASS
+# - The X11 window class
+# - This corresponds to the class criterion
+# %instance
+# - The first part of WM_CLASS
+# - The X11 window instance
+# - This corresponds to the instance criterion
+# %machine
+# - WM_CLIENT_MACHINE
+# - The X11 name of the machine
+# - This corresponds to the machine criterion
+
+# kill only the About dialog from Firefox
+#bindsym $mod+x [class="Firefox" window_role="About"] kill
 
 # enable floating mode for all XTerm windows
 for_window [class="XTerm"] floating enable
@@ -126,6 +144,21 @@ workspace_auto_back_and_forth yes
 
 
 # ==============================================================================
+# MODAL EXPERIMENT
+# ==============================================================================
+bindsym $mod+v mode "move"
+mode "move" {
+	bindsym h move left
+	bindsym j move down
+	bindsym k move up
+	bindsym l move right
+
+	bindsym Escape mode "default"
+	bindsym q      mode "default"
+}
+
+
+# ==============================================================================
 # MONITOR (OUTPUT)
 # ==============================================================================
 
@@ -136,16 +169,6 @@ bindsym $mod+shift+l focus output right
 # Move workspace to monitor
 bindsym $mod+Shift+Left   move workspace to output left
 bindsym $mod+Shift+Right  move workspace to output right
-bindsym $mod+Shift+comma  move workspace to output left
-bindsym $mod+Shift+period move workspace to output right
-
-# Old bindings:
-# Swich monitor
-#bindsym $mod+comma  focus output left
-#bindsym $mod+period focus output right
-# Move workspace to monitor
-#bindsym $mod+Shift+comma  move workspace to output left
-#bindsym $mod+Shift+period move workspace to output right
 
 
 # ==============================================================================
@@ -153,10 +176,6 @@ bindsym $mod+Shift+period move workspace to output right
 # ==============================================================================
 
 # Switch workspace on current monitor
-#bindsym $mod+comma  workspace prev_on_output
-#bindsym $mod+period workspace next_on_output
-#bindsym $mod+shift+h workspace prev_on_output
-#bindsym $mod+shift+l workspace next_on_output
 bindsym $mod+shift+j workspace next_on_output
 bindsym $mod+shift+k workspace prev_on_output
 
@@ -187,18 +206,19 @@ bindsym $mod+8 exec --no-startup-id i3-select "$ws8"
 bindsym $mod+9 exec --no-startup-id i3-select "$ws9"
 bindsym $mod+0 exec --no-startup-id i3-select "$ws10"
 
-# Rename workspace
-bindsym $mod+shift+r exec --no-startup-id i3-input -F 'exec i3-rename %s' -P 'rename: '
+# Goto workspace
+#bindsym $mod+g exec --no-startup-id i3-input -F 'exec i3-select %s' -P 'Select: ' 
+bindsym $mod+g exec --no-startup-id i3-input-select
 
 # New workspace
 bindsym $mod+shift+n exec --no-startup-id i3-new
 
+# Rename workspace
+bindsym $mod+shift+r exec --no-startup-id i3-input-rename
+
 # ==============================================================================
 # WINDOW
 # ==============================================================================
-
-# Kill window
-bindsym $mod+w kill
 
 # Switch window
 bindsym $mod+h focus left
@@ -212,10 +232,16 @@ bindsym $mod+Down  move down
 bindsym $mod+Up    move up
 bindsym $mod+Right move right
 
+# Kill window
+bindsym $mod+w kill
+
 
 # ==============================================================================
 # LAYOUT
 # ==============================================================================
+
+# Focus parent
+bindsym $mod+u focus parent
 
 # Full-screen toggle
 bindsym $mod+f fullscreen toggle
@@ -224,7 +250,7 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+s split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+#bindsym $mod+v split v
 
 # Change container layout
 bindsym $mod+m mode "layout"
@@ -242,10 +268,7 @@ mode "layout" {
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+u focus parent
+#bindsym $mod+space focus mode_toggle
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -287,6 +310,10 @@ mode "resize" {
 # button6: Scroll wheel right
 # button7: Scroll wheel left
 
+# Kill window with middle clidk
+# Disabled because of misclicks trying to close browser tabs
+#bindsym --release button2 kill
+
 
 # ==============================================================================
 # FLOATING
@@ -325,4 +352,62 @@ exec compton -f
 # TODO: `chrome-chat`
 # TODO: `chrome-calendar`
 # TODO: `chrome-gmail`
+
+
+# ==============================================================================
+# NORMAL MODE
+# ==============================================================================
+bindsym $mod+space mode "normal"
+
+mode "normal" {
+
+	# Switch monitor
+	bindsym shift+h focus output left
+	bindsym shift+l focus output right
+
+	# Switch workspace on current monitor
+	bindsym shift+j workspace next_on_output
+	bindsym shift+k workspace prev_on_output
+
+	# Open workspace on current monitor
+	bindsym 1 exec --no-startup-id i3-select "$ws1"
+	bindsym 2 exec --no-startup-id i3-select "$ws2"
+	bindsym 3 exec --no-startup-id i3-select "$ws3"
+	bindsym 4 exec --no-startup-id i3-select "$ws4"
+	bindsym 5 exec --no-startup-id i3-select "$ws5"
+	bindsym 6 exec --no-startup-id i3-select "$ws6"
+	bindsym 7 exec --no-startup-id i3-select "$ws7"
+	bindsym 8 exec --no-startup-id i3-select "$ws8"
+	bindsym 9 exec --no-startup-id i3-select "$ws9"
+	bindsym 0 exec --no-startup-id i3-select "$ws10"
+
+	# Move workspace to monitor
+	bindsym Shift+Left  move workspace to output left
+	bindsym Shift+Right move workspace to output right
+
+	# Switch window
+	bindsym h focus left
+	bindsym j focus down
+	bindsym k focus up
+	bindsym l focus right
+
+	# Move window
+	bindsym Left  move left
+	bindsym Down  move down
+	bindsym Up    move up
+	bindsym Right move right
+
+	# Kill window
+	bindsym $mod+w kill
+
+	# Focus parent
+	bindsym u focus parent
+
+	# Full-screen toggle
+	bindsym f fullscreen toggle
+
+	# Exit
+	bindsym space mode "default"
+	bindsym q     mode "default"
+}
 
