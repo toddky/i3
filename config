@@ -52,6 +52,10 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
+# Workaround for fixing focus when windows cross output boundary
+# https://github.com/i3/i3/pull/4596
+focus_follows_mouse no
+
 
 # ==============================================================================
 # SETTINGS
@@ -82,7 +86,7 @@ set $unfocused-text-color #b0b0b0
 set $urgent-text-color    #f0f0f0
 set $indicator-color      $bg-color
 
-# Widow Colors          border              background          text                  indicator
+# Window Colors         border              background          text                  indicator
 client.focused          $focused-bg-color   $focused-bg-color   $focused-text-color   $indicator-color
 client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-color  $indicator-color
 client.unfocused        $unfocused-bg-color $unfocused-bg-color $unfocused-text-color $indicator-color
@@ -317,4 +321,8 @@ bindsym $mod+shift+p exec --no-startup-id ,screenshot
 # Add fade and transition effects
 # sudo apt install compton
 exec compton -f
+
+# TODO: `chrome-chat`
+# TODO: `chrome-calendar`
+# TODO: `chrome-gmail`
 
