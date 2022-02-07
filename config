@@ -42,7 +42,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec i3-term
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id dmenu_run
@@ -93,21 +93,9 @@ client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-c
 client.unfocused        $unfocused-bg-color $unfocused-bg-color $unfocused-text-color $indicator-color
 client.urgent           $urgent-bg-color    $urgent-bg-color    $urgent-text-color    $indicator-color
 
-
 # ==============================================================================
-# EXPERIMENTS
+# ASSIGN
 # ==============================================================================
-
-# Open Chrome
-bindsym $mod+n exec --no-startup-id /opt/google/chrome/chrome
-
-# The middle button and a modifer over any part of the window kills the window
-bindsym --whole-window $mod+button2 kill
-
-# The right button toggles floating
-bindsym button3 floating toggle
-bindsym $mod+button3 floating toggle
-
 # %title
 # - _NET_WM_NAME or WM_NAME as fallback
 # - The X11 window title
@@ -125,6 +113,44 @@ bindsym $mod+button3 floating toggle
 # - The X11 name of the machine
 # - This corresponds to the machine criterion
 
+# TODO: I don't know if this works
+# WM_CLASS(STRING) = "spotify", "Spotify"
+# WM_NAME(STRING) = "Spotify"
+assign [class="Spotify"] 1
+
+# WM_CLASS(STRING) = "google-chrome", "Google-chrome"
+# WM_NAME(UTF8_STRING) = "YouTube Music - Google Chrome"
+assign [title="^YouTube Music"] 2
+
+# WM_CLASS(STRING) = "google-chrome", "Google-chrome"
+# _NET_WM_NAME(UTF8_STRING) = "GMAIL"
+assign [title="GMAIL"] 2
+
+# WM_CLASS(STRING) = "crx_mdpkiolbdkhdjpekfbkbmhigcaggjagi", "Google-chrome"
+# WM_NAME(UTF8_STRING) = "Google Chat - Chat"
+assign [title="^Google Chat"] 2
+
+# WM_CLASS(STRING) = "crx_kjbdgfilnfhdoflbpgamdcdgpehopbep", "Google-chrome"
+# WM_NAME(UTF8_STRING) = "Google Calendar - Google.com - Calendar - Week of February 7, 2022"
+assign [title="^Google Calendar"] 2
+
+
+# ==============================================================================
+# EXPERIMENTS
+# ==============================================================================
+
+# $mod+? - Show keyboard shortcuts
+bindsym $mod+Shift+slash exec i3-shortcuts
+
+# $mod+i - Get window info
+bindsym --release $mod+i exec --no-startup-id i3-window-info
+
+# Open workspace
+bindsym $mod+s exec --no-startup-id i3-rofi-workspace
+
+# Open Chrome
+bindsym $mod+n exec --no-startup-id /opt/google/chrome/chrome
+
 # kill only the About dialog from Firefox
 #bindsym $mod+x [class="Firefox" window_role="About"] kill
 
@@ -140,7 +166,9 @@ for_window [class="urxvt"] border pixel 1
 for_window [title="x200: ~/work"] floating enable
 
 # Switch back to previous workspace
-workspace_auto_back_and_forth yes
+workspace_auto_back_and_forth no
+
+#bindsym $mod+z workspace 3:<span foreground="red">vim</span>
 
 
 # ==============================================================================
@@ -247,7 +275,7 @@ bindsym $mod+u focus parent
 bindsym $mod+f fullscreen toggle
 
 # split in horizontal orientation
-bindsym $mod+s split h
+#bindsym $mod+s split h
 
 # split in vertical orientation
 #bindsym $mod+v split v
@@ -313,6 +341,14 @@ mode "resize" {
 # Kill window with middle clidk
 # Disabled because of misclicks trying to close browser tabs
 #bindsym --release button2 kill
+
+# $mod+middle click
+# Any part of the window to kill it
+bindsym --whole-window $mod+button2 kill
+
+# Right click toggles floating
+bindsym button3 floating toggle
+bindsym $mod+button3 floating toggle
 
 
 # ==============================================================================
