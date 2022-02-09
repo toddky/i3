@@ -17,7 +17,12 @@ set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 10
 font pango:DejaVu Sans Mono 10
+
+# Disable title
+#new_window 1pixel
+default_floating_border pixel 1
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -33,13 +38,6 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # start a terminal
 bindsym $mod+Return exec i3-term
@@ -65,8 +63,14 @@ default_orientation horizontal
 # Syntax: workspace_layout default|stacking|tabbed
 workspace_layout default
 
-# focus_wrapping yes|no|force|workspace
+# Syntax: focus_wrapping yes|no|force|workspace
 focus_wrapping workspace
+
+# Syntax: title_align left|center|right
+title_align left
+
+# Syntax: popup_during_fullscreen smart|ignore|leave_fullscreen
+popup_during_fullscreen leave_fullscreen
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -75,6 +79,12 @@ bar {
 	position bottom
 	#status_command i3status
 	status_command i3blocks -c ~/.config/i3/i3blocks.conf
+
+	workspace_buttons yes
+
+	# TODO: Add bar colors
+	colors {
+	}
 }
 
 set $focused-bg-color     #3060a0
@@ -113,26 +123,34 @@ client.urgent           $urgent-bg-color    $urgent-bg-color    $urgent-text-col
 # - The X11 name of the machine
 # - This corresponds to the machine criterion
 
+# Workspace 1 for Media
 # TODO: I don't know if this works
 # WM_CLASS(STRING) = "spotify", "Spotify"
 # WM_NAME(STRING) = "Spotify"
 assign [class="Spotify"] 1
+assign [class="Google-chrome" title="^YouTube Music"] 1
 
-# WM_CLASS(STRING) = "google-chrome", "Google-chrome"
-# WM_NAME(UTF8_STRING) = "YouTube Music - Google Chrome"
-assign [title="^YouTube Music"] 2
+# Workspace 1 for Mail/Chat/Calendar
+assign [class="Google-chrome" title="GMAIL"] 2
+assign [class="Google-chrome" title="^Google Chat"] 2
+assign [class="Google-chrome" title="^Google Calendar"] 2
 
-# WM_CLASS(STRING) = "google-chrome", "Google-chrome"
-# _NET_WM_NAME(UTF8_STRING) = "GMAIL"
-assign [title="GMAIL"] 2
+# Automatically assign Chrome windows to workspace
+assign [class="Google-chrome" title="^1"] 1
+assign [class="Google-chrome" title="^2"] 2
+assign [class="Google-chrome" title="^3"] 3
+assign [class="Google-chrome" title="^4"] 4
+assign [class="Google-chrome" title="^5"] 5
+assign [class="Google-chrome" title="^6"] 6
+assign [class="Google-chrome" title="^7"] 7
+assign [class="Google-chrome" title="^8"] 8
+assign [class="Google-chrome" title="^9"] 9
+assign [class="Google-chrome" title="^0"] 10
 
-# WM_CLASS(STRING) = "crx_mdpkiolbdkhdjpekfbkbmhigcaggjagi", "Google-chrome"
-# WM_NAME(UTF8_STRING) = "Google Chat - Chat"
-assign [title="^Google Chat"] 2
-
-# WM_CLASS(STRING) = "crx_kjbdgfilnfhdoflbpgamdcdgpehopbep", "Google-chrome"
-# WM_NAME(UTF8_STRING) = "Google Calendar - Google.com - Calendar - Week of February 7, 2022"
-assign [title="^Google Calendar"] 2
+# print window titles of firefox windows red
+#for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[CHROME]</span> %title"
+for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[CHROME]</span> %title"
+for_window [class="Gnome-terminal"] title_format "<span foreground='yellow'>[TERMINAL]</span> %title"
 
 
 # ==============================================================================
@@ -170,6 +188,10 @@ workspace_auto_back_and_forth no
 
 #bindsym $mod+z workspace 3:<span foreground="red">vim</span>
 
+# Send and open scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
 
 # ==============================================================================
 # MODAL EXPERIMENT
@@ -184,6 +206,29 @@ mode "move" {
 	bindsym Escape mode "default"
 	bindsym q      mode "default"
 }
+
+
+# ==============================================================================
+# MEDIA/BRIGHTNESS
+# ==============================================================================
+# https://github.com/bookercodes/setupi3/blob/78282aa2047039214a60c704b44a6a2826e90a3c/config#L226
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Media player controls
+bindsym XF86AudioPlay  exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext  exec playerctl next
+bindsym XF86AudioPrev  exec playerctl previous
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
 
 # ==============================================================================
@@ -270,6 +315,8 @@ bindsym $mod+w kill
 
 # Focus parent
 bindsym $mod+u focus parent
+# TODO: Focus child
+#bindsym $mod+d focus child
 
 # Full-screen toggle
 bindsym $mod+f fullscreen toggle
@@ -281,19 +328,23 @@ bindsym $mod+f fullscreen toggle
 #bindsym $mod+v split v
 
 # Change container layout
-bindsym $mod+m mode "layout"
+bindsym $mod+semicolon mode "layout"
 mode "layout" {
 	bindsym 1 layout tabbed
 	bindsym 2 layout stacking
 	bindsym 3 layout splith
 	bindsym 4 layout splitv
 
-	bindsym $mod+m mode "default"
+	bindsym l layout toggle tabbed stacking splith splitv
+	bindsym h layout toggle splitv splith stacking tabbed
+
+	bindsym Escape mode "default"
 	bindsym q      mode "default"
 }
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+#bindsym $mod+Shift+space floating toggle
+bindsym $mod+t floating toggle
 
 # change focus between tiling / floating windows
 #bindsym $mod+space focus mode_toggle
@@ -305,7 +356,8 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 # TODO: Map this to something else
-#bindsym $mod+Shift+r restart
+bindsym $mod+Shift+c restart
+
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
@@ -369,6 +421,17 @@ default_floating_border normal 3
 # TODO: Small sticky window to corner
 # https://www.reddit.com/r/i3wm/comments/4bhypw/comment/d19szvc/?utm_source=share&utm_medium=web2x&context=3
 #bindsym mod1+y fullscreen disable; floating enable; resize set 422 240; sticky enable; move position 870 25
+
+
+# ==============================================================================
+# MARK
+# ==============================================================================
+
+# read 1 character and mark the current window with this character
+bindsym $mod+Shift+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
+
+# read 1 character and go to the window with the character
+bindsym $mod+m exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
 
 # ==============================================================================
