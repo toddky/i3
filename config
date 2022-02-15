@@ -61,7 +61,8 @@ focus_follows_mouse no
 # Syntax: default_orientation horizontal|vertical|auto
 default_orientation horizontal
 # Syntax: workspace_layout default|stacking|tabbed
-workspace_layout default
+#workspace_layout default
+workspace_layout stacking
 
 # Syntax: focus_wrapping yes|no|force|workspace
 focus_wrapping workspace
@@ -201,8 +202,8 @@ mode "move" {
 	bindsym k move up
 	bindsym l move right
 
-	bindsym Escape mode "default"
-	bindsym q      mode "default"
+	bindsym Escape mode default
+	bindsym q      mode default
 }
 
 
@@ -326,18 +327,24 @@ bindsym $mod+f fullscreen toggle
 #bindsym $mod+v split v
 
 # Change container layout
-bindsym $mod+semicolon mode "layout"
-mode "layout" {
+set $mode_layout Layout: 1:[t]abbed 2:[s]tacking 3:[h]split 4:[v]split
+bindsym $mod+semicolon mode "$mode_layout"
+mode "$mode_layout" {
 	bindsym 1 layout tabbed
 	bindsym 2 layout stacking
 	bindsym 3 layout splith
 	bindsym 4 layout splitv
 
-	bindsym l layout toggle tabbed stacking splith splitv
-	bindsym h layout toggle splitv splith stacking tabbed
+	bindsym t layout tabbed  , mode default
+	bindsym s layout stacking, mode default
+	bindsym h layout splith  , mode default
+	bindsym v layout splitv  , mode default
 
-	bindsym Escape mode "default"
-	bindsym q      mode "default"
+	bindsym j layout toggle tabbed stacking splith splitv
+	bindsym k layout toggle splitv splith stacking tabbed
+
+	bindsym Escape mode default
+	bindsym q      mode default
 }
 
 # toggle tiling / floating
@@ -372,8 +379,8 @@ mode "resize" {
 	bindsym k resize shrink height 2 px or 2 ppt
 	bindsym l resize grow   width  2 px or 2 ppt
 
-	bindsym $mod+r mode "default"
-	bindsym q      mode "default"
+	bindsym $mod+r mode default
+	bindsym q      mode default
 }
 
 
@@ -385,11 +392,11 @@ mode "resize" {
 set $mode_launcher Launch: [c]hrome [t]erminal
 bindsym $mod+o mode "$mode_launcher"
 mode "$mode_launcher" {
-	bindsym c exec --no-startup-id /opt/google/chrome/chrome; mode "default"
-	bindsym t exec --no-startup-id i3-term; mode "default"
-	bindsym q mode "default"
+	bindsym c exec --no-startup-id /opt/google/chrome/chrome; mode default
+	bindsym t exec --no-startup-id i3-term; mode default
+	bindsym q mode default
 
-	bindsym Return exec i3-term; mode "default"
+	bindsym Return exec i3-term; mode default
 }
 
 
@@ -524,8 +531,7 @@ mode "normal" {
 	bindsym f fullscreen toggle
 
 	# Exit
-	bindsym space mode "default"
-	bindsym q     mode "default"
+	bindsym space mode default
+	bindsym q     mode default
 }
-
 
