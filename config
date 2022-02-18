@@ -73,6 +73,8 @@ title_align left
 # Syntax: popup_during_fullscreen smart|ignore|leave_fullscreen
 popup_during_fullscreen leave_fullscreen
 
+# Syntax: focus_on_window_activation smart|urgent|focus|none
+# TODO:
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -128,13 +130,13 @@ client.urgent           $urgent-bg-color    $urgent-bg-color    $urgent-text-col
 # TODO: I don't know if this works
 # WM_CLASS(STRING) = "spotify", "Spotify"
 # WM_NAME(STRING) = "Spotify"
-assign [class="Spotify"] 1
+for_window [class="Spotify"] move container to workspace 1, mark s
 assign [class="Google-chrome" title="^YouTube Music"] 1
 
-# Workspace 1 for Mail/Chat/Calendar
-assign [class="Google-chrome" title="GMAIL"] 2
-assign [class="Google-chrome" title="^Google Chat"] 2
-assign [class="Google-chrome" title="^Google Calendar"] 2
+# Workspace 2 for Mail/Chat/Calendar
+for_window [class="Google-chrome" title="^GMAIL$"]          move container to workspace 2, mark g
+for_window [class="Google-chrome" title="^Google Chat"]     move container to workspace 2, mark h
+for_window [class="Google-chrome" title="^Google Calendar"] move container to workspace 2, mark c
 
 # Automatically assign Chrome windows to workspace
 assign [class="Google-chrome" title="^1"] 1
@@ -153,6 +155,9 @@ assign [class="Google-chrome" title="^0"] 10
 for_window [class="Gnome-terminal"] title_format "<span foreground='yellow'>[T]</span>%title"
 for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[C]</span>%title"
 for_window [class="Firefox"] title_format "<span foreground='yellow'>[F]</span>%title"
+
+# Scratch terminal
+for_window [class="Gnome-terminal" title="^scratchpad$"] move scratchpad
 
 
 # ==============================================================================
@@ -188,8 +193,9 @@ workspace_auto_back_and_forth no
 #bindsym $mod+z workspace 3:<span foreground="red">vim</span>
 
 # Send and open scratchpad
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
+bindsym $mod+p scratchpad show
+#bindsym $mod+Shift+minus move scratchpad
+#bindsym $mod+minus scratchpad show
 
 
 # ==============================================================================
@@ -214,10 +220,10 @@ mode "move" {
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec ",volume up"
+bindsym XF86AudioLowerVolume exec ",volume down"
+bindsym XF86AudioMute        exec ",volume mute"
+bindsym XF86AudioMute        exec ",volume mic"
 
 # Media player controls
 bindsym XF86AudioPlay  exec playerctl play
@@ -226,8 +232,8 @@ bindsym XF86AudioNext  exec playerctl next
 bindsym XF86AudioPrev  exec playerctl previous
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp   exec ",brightness up"
+bindsym XF86MonBrightnessDown exec ",brightness down"
 
 
 # ==============================================================================
@@ -369,15 +375,20 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
 mode "resize" {
-	bindsym shift+h resize shrink width  10 px or 10 ppt
-	bindsym shift+j resize grow   height 10 px or 10 ppt
-	bindsym shift+k resize shrink height 10 px or 10 ppt
-	bindsym shift+l resize grow   width  10 px or 10 ppt
+	bindsym shift+h resize shrink width  500 px or 20 ppt, move position center
+	bindsym shift+j resize shrink height 200 px or 20 ppt, move position center
+	bindsym shift+k resize grow   height 200 px or 20 ppt, move position center
+	bindsym shift+l resize grow   width  500 px or 20 ppt, move position center
 
-	bindsym h resize shrink width  2 px or 2 ppt
-	bindsym j resize grow   height 2 px or 2 ppt
-	bindsym k resize shrink height 2 px or 2 ppt
-	bindsym l resize grow   width  2 px or 2 ppt
+	bindsym h resize shrink width  50 px or 2 ppt, move position center
+	bindsym j resize shrink height 20 px or 2 ppt, move position center
+	bindsym k resize grow   height 20 px or 2 ppt, move position center
+	bindsym l resize grow   width  50 px or 2 ppt, move position center
+
+	bindsym c move position center
+
+    bindsym 1 resize set 1600 980, move position center
+    bindsym 2 resize set 1400 840, move position center
 
 	bindsym $mod+r mode default
 	bindsym q      mode default
@@ -494,16 +505,16 @@ mode "normal" {
 	bindsym shift+k workspace prev_on_output
 
 	# Open workspace on current monitor
-	bindsym 1 exec --no-startup-id i3-select "$ws1"
-	bindsym 2 exec --no-startup-id i3-select "$ws2"
-	bindsym 3 exec --no-startup-id i3-select "$ws3"
-	bindsym 4 exec --no-startup-id i3-select "$ws4"
-	bindsym 5 exec --no-startup-id i3-select "$ws5"
-	bindsym 6 exec --no-startup-id i3-select "$ws6"
-	bindsym 7 exec --no-startup-id i3-select "$ws7"
-	bindsym 8 exec --no-startup-id i3-select "$ws8"
-	bindsym 9 exec --no-startup-id i3-select "$ws9"
-	bindsym 0 exec --no-startup-id i3-select "$ws10"
+	bindsym 1 exec i3-select "$ws1"
+	bindsym 2 exec i3-select "$ws2"
+	bindsym 3 exec i3-select "$ws3"
+	bindsym 4 exec i3-select "$ws4"
+	bindsym 5 exec i3-select "$ws5"
+	bindsym 6 exec i3-select "$ws6"
+	bindsym 7 exec i3-select "$ws7"
+	bindsym 8 exec i3-select "$ws8"
+	bindsym 9 exec i3-select "$ws9"
+	bindsym 0 exec i3-select "$ws10"
 
 	# Move workspace to monitor
 	bindsym Shift+Left  move workspace to output left
