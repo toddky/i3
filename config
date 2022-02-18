@@ -223,7 +223,7 @@ set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec ",volume up"
 bindsym XF86AudioLowerVolume exec ",volume down"
 bindsym XF86AudioMute        exec ",volume mute"
-bindsym XF86AudioMute        exec ",volume mic"
+bindsym XF86AudioMicMute     exec ",volume mic"
 
 # Media player controls
 bindsym XF86AudioPlay  exec playerctl play
