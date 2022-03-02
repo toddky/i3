@@ -62,7 +62,8 @@ focus_follows_mouse no
 default_orientation horizontal
 # Syntax: workspace_layout default|stacking|tabbed
 #workspace_layout default
-workspace_layout stacking
+#workspace_layout stacking
+workspace_layout tabbed
 
 # Syntax: focus_wrapping yes|no|force|workspace
 focus_wrapping workspace
@@ -193,9 +194,16 @@ workspace_auto_back_and_forth no
 #bindsym $mod+z workspace 3:<span foreground="red">vim</span>
 
 # Send and open scratchpad
+bindsym $mod+y exec i3-scratchpad-hide
 bindsym $mod+p scratchpad show
+bindsym $mod+Shift+p move scratchpad
 #bindsym $mod+Shift+minus move scratchpad
 #bindsym $mod+minus scratchpad show
+
+# TODO: I want to use test a new way of moving
+# If I have a left/right split, and each split is tabbed, I want to be able to 
+# move between each split with mod+h/l. But when I need to switch tabs in each one,
+# I can use mod(+shift)+tab.
 
 
 # ==============================================================================
@@ -357,6 +365,7 @@ mode "$mode_layout" {
 #bindsym $mod+Shift+space floating toggle
 bindsym $mod+t floating toggle
 
+
 # change focus between tiling / floating windows
 #bindsym $mod+space focus mode_toggle
 
@@ -422,6 +431,10 @@ mode "$mode_launcher" {
 # button6: Scroll wheel right
 # button7: Scroll wheel left
 
+# Disable click on titles
+bindsym button1 nop
+bindsym button3 nop
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -475,7 +488,7 @@ bindsym $mod+m exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 # ==============================================================================
 bindsym $mod+a focus output primary; exec i3-select "$ws2"
 
-bindsym --release $mod+shift+p exec --no-startup-id ,screenshot
+#bindsym --release $mod+shift+p exec --no-startup-id ,screenshot
 
 # TODO: This was a chat notification:
 #assign [class="Dunst"] $workspace
