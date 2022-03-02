@@ -12,6 +12,7 @@
 # - https://gist.github.com/bcremer/7524492
 
 # i3 config file (v4)
+set $alt Mod1
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -52,7 +53,8 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 
 # Workaround for fixing focus when windows cross output boundary
 # https://github.com/i3/i3/pull/4596
-focus_follows_mouse no
+#focus_follows_mouse no
+focus_follows_mouse yes
 
 
 # ==============================================================================
@@ -447,7 +449,15 @@ floating_modifier $mod
 bindsym --whole-window $mod+button2 kill
 
 # Right click toggles floating
-bindsym --whole-window $mod+button3 floating toggle
+#bindsym --whole-window $mod+button3 floating toggle
+
+# Move workspace to monitor
+bindsym --whole-window $mod+button1 move workspace to output left
+bindsym --whole-window $mod+button3 move workspace to output right
+
+# Switch workspaces
+bindsym $mod+button4 --whole-window workspace prev_on_output
+bindsym $mod+button5 --whole-window workspace next_on_output
 
 
 # ==============================================================================
@@ -481,6 +491,34 @@ bindsym $mod+Shift+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
 
 # read 1 character and go to the window with the character
 bindsym $mod+m exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
+
+# Quickly jump to mark
+bindsym $mod+$alt+a exec "i3-focus-mark a"
+bindsym $mod+$alt+b exec "i3-focus-mark b"
+bindsym $mod+$alt+c exec "i3-focus-mark c"
+bindsym $mod+$alt+d exec "i3-focus-mark d"
+bindsym $mod+$alt+e exec "i3-focus-mark e"
+bindsym $mod+$alt+f exec "i3-focus-mark f"
+bindsym $mod+$alt+g exec "i3-focus-mark g"
+bindsym $mod+$alt+h exec "i3-focus-mark h"
+bindsym $mod+$alt+i exec "i3-focus-mark i"
+bindsym $mod+$alt+j exec "i3-focus-mark j"
+bindsym $mod+$alt+k exec "i3-focus-mark k"
+bindsym $mod+$alt+l exec "i3-focus-mark l"
+bindsym $mod+$alt+m exec "i3-focus-mark m"
+bindsym $mod+$alt+n exec "i3-focus-mark n"
+bindsym $mod+$alt+o exec "i3-focus-mark o"
+bindsym $mod+$alt+p exec "i3-focus-mark p"
+bindsym $mod+$alt+q exec "i3-focus-mark q"
+bindsym $mod+$alt+r exec "i3-focus-mark r"
+bindsym $mod+$alt+s exec "i3-focus-mark s"
+bindsym $mod+$alt+t exec "i3-focus-mark t"
+bindsym $mod+$alt+u exec "i3-focus-mark u"
+bindsym $mod+$alt+v exec "i3-focus-mark v"
+bindsym $mod+$alt+w exec "i3-focus-mark w"
+bindsym $mod+$alt+x exec "i3-focus-mark x"
+bindsym $mod+$alt+y exec "i3-focus-mark y"
+bindsym $mod+$alt+z exec "i3-focus-mark z"
 
 
 # ==============================================================================
