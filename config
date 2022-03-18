@@ -109,6 +109,7 @@ client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-c
 client.unfocused        $unfocused-bg-color $unfocused-bg-color $unfocused-text-color $indicator-color
 client.urgent           $urgent-bg-color    $urgent-bg-color    $urgent-text-color    $indicator-color
 
+
 # ==============================================================================
 # ASSIGN
 # ==============================================================================
@@ -173,8 +174,14 @@ bindsym $mod+Shift+slash exec i3-shortcuts
 # $mod+i - Get window info
 bindsym --release $mod+i exec --no-startup-id i3-window-info
 
+#bindsym --release $mod+shift+i exec --no-startup-id i3-test-focus
+
 # Open workspace
 bindsym $mod+s exec --no-startup-id i3-rofi-workspace
+
+# Lock
+bindsym $mod+x exec --no-startup-id ",lock"
+
 
 # kill only the About dialog from Firefox
 #bindsym $mod+x [class="Firefox" window_role="About"] kill
@@ -195,6 +202,10 @@ workspace_auto_back_and_forth no
 
 #bindsym $mod+z workspace 3:<span foreground="red">vim</span>
 
+# logseq
+bindsym $mod+Return [class="Logseq"] scratchpad show
+
+
 # Send and open scratchpad
 bindsym $mod+y exec i3-scratchpad-hide
 bindsym $mod+p scratchpad show
@@ -207,26 +218,18 @@ bindsym $mod+Shift+p move scratchpad
 # move between each split with mod+h/l. But when I need to switch tabs in each one,
 # I can use mod(+shift)+tab.
 
-
-# ==============================================================================
-# MODAL EXPERIMENT
-# ==============================================================================
-bindsym $mod+v mode "move"
-mode "move" {
-	bindsym h move left
-	bindsym j move down
-	bindsym k move up
-	bindsym l move right
-
-	bindsym Escape mode default
-	bindsym q      mode default
-}
-
+bindsym $mod+space exec dunstctl close
 
 # ==============================================================================
 # MEDIA/BRIGHTNESS
 # ==============================================================================
 # https://github.com/bookercodes/setupi3/blob/78282aa2047039214a60c704b44a6a2826e90a3c/config#L226
+
+#bindsym $mod+$alt+p     exec playerctl play-pause
+#bindsym $mod+$alt+Up    exec playerctl play
+#bindsym $mod+$alt+Down  exec playerctl pause
+#bindsym $mod+$alt+Left  exec playerctl next
+#bindsym $mod+$alt+Right exec playerctl previous
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -251,8 +254,8 @@ bindsym XF86MonBrightnessDown exec ",brightness down"
 # ==============================================================================
 
 # Switch monitor
-bindsym $mod+shift+h focus output left
-bindsym $mod+shift+l focus output right
+bindsym $mod+Shift+h focus output left
+bindsym $mod+Shift+l focus output right
 
 # Move workspace to monitor
 bindsym $mod+Shift+Left   move workspace to output left
@@ -264,8 +267,8 @@ bindsym $mod+Shift+Right  move workspace to output right
 # ==============================================================================
 
 # Switch workspace on current monitor
-bindsym $mod+shift+j workspace next_on_output
-bindsym $mod+shift+k workspace prev_on_output
+bindsym $mod+Shift+j workspace next_on_output
+bindsym $mod+Shift+k workspace prev_on_output
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -293,6 +296,7 @@ bindsym $mod+7 exec --no-startup-id i3-select "$ws7"
 bindsym $mod+8 exec --no-startup-id i3-select "$ws8"
 bindsym $mod+9 exec --no-startup-id i3-select "$ws9"
 bindsym $mod+0 exec --no-startup-id i3-select "$ws10"
+bindsym $mod+Shit+7 send container to workspace "$ws7", workspace "$ws7"
 
 # Goto workspace
 #bindsym $mod+g exec --no-startup-id i3-input -F 'exec i3-select %s' -P 'Select: ' 
@@ -308,11 +312,19 @@ bindsym $mod+shift+r exec --no-startup-id i3-input-rename
 # WINDOW
 # ==============================================================================
 
-# Switch window
-bindsym $mod+h fullscreen disable, focus left
+# Switch left/right (special)
+#bindsym $mod+comma  exec --no-startup-id i3-my-focus left
+#bindsym $mod+period exec --no-startup-id i3-my-focus right
+bindsym $mod+h exec --no-startup-id i3-my-focus left
+bindsym $mod+l exec --no-startup-id i3-my-focus right
+
+# Switch window left/right
+#bindsym $mod+h fullscreen disable, focus left
 bindsym $mod+j fullscreen disable, focus down
 bindsym $mod+k fullscreen disable, focus up
-bindsym $mod+l fullscreen disable, focus right
+#bindsym $mod+l fullscreen disable, focus right
+bindsym $mod+comma  fullscreen disable, focus left
+bindsym $mod+period fullscreen disable, focus right
 
 # Move window
 bindsym $mod+Left  move left
@@ -398,8 +410,10 @@ mode "resize" {
 
 	bindsym c move position center
 
-    bindsym 1 resize set 1600 980, move position center
-    bindsym 2 resize set 1400 840, move position center
+    bindsym 1 resize set 2520 1400, move position center
+    bindsym 2 resize set 1880 1040, move position center
+    bindsym 3 resize set 1600 980, move position center
+    bindsym 4 resize set 1400 840, move position center
 
 	bindsym $mod+r mode default
 	bindsym q      mode default
@@ -543,7 +557,7 @@ exec compton -f
 # ==============================================================================
 # NORMAL MODE
 # ==============================================================================
-bindsym $mod+space mode "normal"
+#bindsym $mod+space mode "normal"
 
 mode "normal" {
 
