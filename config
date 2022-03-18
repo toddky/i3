@@ -218,18 +218,14 @@ bindsym $mod+Shift+p move scratchpad
 # move between each split with mod+h/l. But when I need to switch tabs in each one,
 # I can use mod(+shift)+tab.
 
+# Kill notifications
 bindsym $mod+space exec dunstctl close
+
 
 # ==============================================================================
 # MEDIA/BRIGHTNESS
 # ==============================================================================
 # https://github.com/bookercodes/setupi3/blob/78282aa2047039214a60c704b44a6a2826e90a3c/config#L226
-
-#bindsym $mod+$alt+p     exec playerctl play-pause
-#bindsym $mod+$alt+Up    exec playerctl play
-#bindsym $mod+$alt+Down  exec playerctl pause
-#bindsym $mod+$alt+Left  exec playerctl next
-#bindsym $mod+$alt+Right exec playerctl previous
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -239,10 +235,10 @@ bindsym XF86AudioMute        exec ",volume mute"
 bindsym XF86AudioMicMute     exec ",volume mic"
 
 # Media player controls
-bindsym XF86AudioPlay  exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext  exec playerctl next
-bindsym XF86AudioPrev  exec playerctl previous
+bindsym XF86AudioPlay  exec ",media play-pause"
+bindsym XF86AudioPause exec ",media pause"
+bindsym XF86AudioNext  exec ",media next"
+bindsym XF86AudioPrev  exec ",media previous"
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp   exec ",brightness up"
