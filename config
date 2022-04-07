@@ -205,7 +205,6 @@ workspace_auto_back_and_forth no
 # logseq
 bindsym $mod+Return [class="Logseq"] scratchpad show
 
-
 # Send and open scratchpad
 bindsym $mod+y exec i3-scratchpad-hide
 bindsym $mod+p scratchpad show
@@ -425,7 +424,7 @@ set $mode_launcher Launch: [c]hrome [t]erminal
 bindsym $mod+o mode "$mode_launcher"
 mode "$mode_launcher" {
 	bindsym c exec --no-startup-id /opt/google/chrome/chrome; mode default
-	bindsym t exec --no-startup-id i3-term; mode default
+	bindsym t exec --no-startup-id ",term"; mode default
 	bindsym q mode default
 
 	bindsym Return exec i3-term; mode default
