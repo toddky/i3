@@ -157,6 +157,7 @@ assign [class="Google-chrome" title="^0"] 10
 # Add labels
 #for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[CHROME]</span> %title"
 for_window [class="Gnome-terminal"] title_format "<span foreground='yellow'>[T]</span>%title"
+for_window [class="Alacritty"] title_format "<span foreground='yellow'>[T]</span>%title"
 for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[C]</span>%title"
 for_window [class="Firefox"] title_format "<span foreground='yellow'>[F]</span>%title"
 
