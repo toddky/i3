@@ -156,12 +156,13 @@ assign [class="Google-chrome" title="^0"] 10
 
 # Add labels
 #for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[CHROME]</span> %title"
+for_window [class="Alacritty"]      title_format "<span foreground='yellow'>[T]</span>%title"
 for_window [class="Gnome-terminal"] title_format "<span foreground='yellow'>[T]</span>%title"
-for_window [class="Alacritty"] title_format "<span foreground='yellow'>[T]</span>%title"
-for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[C]</span>%title"
-for_window [class="Firefox"] title_format "<span foreground='yellow'>[F]</span>%title"
+for_window [class="Google-chrome"]  title_format "<span foreground='yellow'>[C]</span>%title"
+for_window [class="Firefox"]        title_format "<span foreground='yellow'>[F]</span>%title"
 
 # Scratch terminal
+for_window [class="Alacritty"      title="^scratchpad$"] move scratchpad
 for_window [class="Gnome-terminal" title="^scratchpad$"] move scratchpad
 
 
@@ -181,7 +182,7 @@ bindsym --release $mod+i exec --no-startup-id i3-window-info
 bindsym $mod+s exec --no-startup-id i3-rofi-workspace
 
 # Lock
-bindsym $mod+x exec --no-startup-id ",lock"
+bindsym $mod+z exec --no-startup-id ",lock"
 
 
 # kill only the About dialog from Firefox
@@ -220,6 +221,10 @@ bindsym $mod+Shift+p move scratchpad
 
 # Kill notifications
 bindsym $mod+space exec dunstctl close
+
+
+# TODO: Mouse mode via xdotool
+# https://www.reddit.com/r/i3wm/comments/4bhypw/comment/d19dwoz/?utm_source=share&utm_medium=web2x&context=3 
 
 
 # ==============================================================================
@@ -375,6 +380,8 @@ mode "$mode_layout" {
 #bindsym $mod+Shift+space floating toggle
 bindsym $mod+t floating toggle
 
+# https://www.reddit.com/r/i3wm/comments/4bhypw/comment/d19szvc/?utm_source=share&utm_medium=web2x&context=3
+bindsym $mod+Shift+t fullscreen disable; floating enable; resize set 422 240; sticky enable; move position 870 25
 
 # change focus between tiling / floating windows
 #bindsym $mod+space focus mode_toggle
