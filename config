@@ -143,16 +143,16 @@ for_window [class="Google-chrome" title="^Google Chat"]     move container to wo
 for_window [class="Google-chrome" title="^Google Calendar"] move container to workspace 2, mark c
 
 # Automatically assign Chrome windows to workspace
-assign [class="Google-chrome" title="^1"] 1
-assign [class="Google-chrome" title="^2"] 2
-assign [class="Google-chrome" title="^3"] 3
-assign [class="Google-chrome" title="^4"] 4
-assign [class="Google-chrome" title="^5"] 5
-assign [class="Google-chrome" title="^6"] 6
-assign [class="Google-chrome" title="^7"] 7
-assign [class="Google-chrome" title="^8"] 8
-assign [class="Google-chrome" title="^9"] 9
-assign [class="Google-chrome" title="^0"] 10
+assign [class="Google-chrome" title="^1:"] 1
+assign [class="Google-chrome" title="^2:"] 2
+assign [class="Google-chrome" title="^3:"] 3
+assign [class="Google-chrome" title="^4:"] 4
+assign [class="Google-chrome" title="^5:"] 5
+assign [class="Google-chrome" title="^6:"] 6
+assign [class="Google-chrome" title="^7:"] 7
+assign [class="Google-chrome" title="^8:"] 8
+assign [class="Google-chrome" title="^9:"] 9
+assign [class="Google-chrome" title="^10:"] 10
 
 # Add labels
 #for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[CHROME]</span> %title"
@@ -396,7 +396,7 @@ bindsym $mod+c reload
 bindsym $mod+Shift+c restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec i3-nagbar-exit
 
 # resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
