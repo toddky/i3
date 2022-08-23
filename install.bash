@@ -4,5 +4,6 @@ sudo apt install -y \
 	i3 \
 	i3blocks \
 	i3status \
-	rofi
+	rofi \
+	acpi
 
