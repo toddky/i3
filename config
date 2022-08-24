@@ -130,17 +130,18 @@ client.urgent           $urgent-bg-color    $urgent-bg-color    $urgent-text-col
 # - The X11 name of the machine
 # - This corresponds to the machine criterion
 
-# Workspace 1 for Media
-# TODO: I don't know if this works
-# WM_CLASS(STRING) = "spotify", "Spotify"
-# WM_NAME(STRING) = "Spotify"
-for_window [class="Spotify"] move container to workspace 1, mark s
-assign [class="Google-chrome" title="^YouTube Music"] 1
+# Workspace 2 for Media
+# TODO: Test if these work:
+#   WM_CLASS(STRING) = "spotify", "Spotify"
+#   WM_NAME(STRING) = "Spotify"
+for_window [class="Spotify"] move container to workspace 2, mark s
+assign [class="Google-chrome" title="^YouTube Music"] 2
 
 # Workspace 2 for Mail/Chat/Calendar
-for_window [class="Google-chrome" title="^GMAIL$"]          move container to workspace 2, mark g
+for_window [class="Google-chrome" title="^Gmail"]           move container to workspace 2, mark g
 for_window [class="Google-chrome" title="^Google Chat"]     move container to workspace 2, mark h
 for_window [class="Google-chrome" title="^Google Calendar"] move container to workspace 2, mark c
+
 
 # Automatically assign Chrome windows to workspace
 assign [class="Google-chrome" title="^1:"] 1
@@ -157,6 +158,7 @@ assign [class="Google-chrome" title="^10:"] 10
 # Add labels
 #for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[CHROME]</span> %title"
 for_window [class="Alacritty"]      title_format "<span foreground='yellow'>[T]</span>%title"
+for_window [class="kitty"]          title_format "<span foreground='yellow'>[T]</span>%title"
 for_window [class="Gnome-terminal"] title_format "<span foreground='yellow'>[T]</span>%title"
 for_window [class="Google-chrome"]  title_format "<span foreground='yellow'>[C]</span>%title"
 for_window [class="Firefox"]        title_format "<span foreground='yellow'>[F]</span>%title"
@@ -215,16 +217,18 @@ bindsym $mod+Shift+p move scratchpad
 #bindsym $mod+minus scratchpad show
 
 # TODO: I want to use test a new way of moving
-# If I have a left/right split, and each split is tabbed, I want to be able to 
+# If I have a left/right split, and each split is tabbed, I want to be able to
 # move between each split with mod+h/l. But when I need to switch tabs in each one,
 # I can use mod(+shift)+tab.
 
 # Kill notifications
 bindsym $mod+space exec dunstctl close
 
-
 # TODO: Mouse mode via xdotool
 # https://www.reddit.com/r/i3wm/comments/4bhypw/comment/d19dwoz/?utm_source=share&utm_medium=web2x&context=3 
+
+# TODO: Tray output for application icons
+# https://i3wm.org/docs/userguide.html#_tray_output
 
 
 # ==============================================================================
