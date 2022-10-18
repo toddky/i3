@@ -1,4 +1,7 @@
 
+# vim: ft=i3config:
+# https://www.reddit.com/r/i3wm/comments/wco0n9/syntax_highlighting_in_config_files/
+
 # ==============================================================================
 # REFERENCE
 # ==============================================================================
@@ -202,12 +205,14 @@ for_window [class="urxvt"] border pixel 1
 for_window [title="x200: ~/work"] floating enable
 
 # Switch back to previous workspace
+# e.g. Pressing $mod+1 twice will switch back to the original workspace
 workspace_auto_back_and_forth no
 
 #bindsym $mod+z workspace 3:<span foreground="red">vim</span>
 
-# logseq
-bindsym $mod+Return [class="Logseq"] scratchpad show
+# Notes
+#bindsym $mod+Return [class="Logseq"] scratchpad show
+bindsym $mod+Return [class="obsidian"] scratchpad show
 
 # Send and open scratchpad
 bindsym $mod+y exec i3-scratchpad-hide
