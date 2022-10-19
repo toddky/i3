@@ -423,9 +423,8 @@ mode "resize" {
 	bindsym c move position center
 
     bindsym 1 resize set 2520 1400, move position center
-    bindsym 2 resize set 1880 1040, move position center
-    bindsym 3 resize set 1600 980, move position center
-    bindsym 4 resize set 1400 840, move position center
+    bindsym 2 resize set 1880 1160, move position center
+    bindsym 3 resize set 1880 1040, move position center
 
 	bindsym $mod+r mode default
 	bindsym q      mode default
