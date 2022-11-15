@@ -196,6 +196,9 @@ bindsym $mod+z exec --no-startup-id ",lock"
 # enable floating mode for all XTerm windows
 for_window [class="XTerm"] floating enable
 
+# Toggle focus
+#bindsym <SOMETHING> focus mode_toggle
+
 # Make all urxvts use a 1-pixel border:
 for_window [class="urxvt"] border pixel 1
 
