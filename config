@@ -13,6 +13,9 @@
 #
 # Examples:
 # - https://gist.github.com/bcremer/7524492
+# - TODO: Rounded corners:
+#   - https://github.com/WhiteBlackGoose/dotfiles#2022-11-03-1648-utc
+#   - https://github.com/WhiteBlackGoose/dotfiles/blob/b7ab44e67df6de5a21db2f0cf61547a92d95a7b4/picom/picom.conf#L143
 
 # i3 config file (v4)
 set $alt Mod1
