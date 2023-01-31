@@ -33,6 +33,9 @@
 set $alt Mod1
 set $mod Mod4
 
+
+set $exec exec --no-startup-id
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:monospace 10
@@ -63,7 +66,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- ",lock" --nofork
 exec --no-startup-id nm-applet
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d $exec dmenu_run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -166,18 +169,17 @@ for_window [class="Google-chrome" title="^Gmail"]           move container to wo
 for_window [class="Google-chrome" title="^Google Chat"]     move container to workspace 2, mark h
 for_window [class="Google-chrome" title="^Google Calendar"] move container to workspace 2, mark c
 
-
 # Automatically assign Chrome windows to workspace
-assign [class="Google-chrome" title="^1:"] 1
-assign [class="Google-chrome" title="^2:"] 2
-assign [class="Google-chrome" title="^3:"] 3
-assign [class="Google-chrome" title="^4:"] 4
-assign [class="Google-chrome" title="^5:"] 5
-assign [class="Google-chrome" title="^6:"] 6
-assign [class="Google-chrome" title="^7:"] 7
-assign [class="Google-chrome" title="^8:"] 8
-assign [class="Google-chrome" title="^9:"] 9
-assign [class="Google-chrome" title="^10:"] 10
+for_window [class="Google-chrome" title="^1:"]  move container to workspace 1
+for_window [class="Google-chrome" title="^2:"]  move container to workspace 2
+for_window [class="Google-chrome" title="^3:"]  move container to workspace 3
+for_window [class="Google-chrome" title="^4:"]  move container to workspace 4
+for_window [class="Google-chrome" title="^5:"]  move container to workspace 5
+for_window [class="Google-chrome" title="^6:"]  move container to workspace 6
+for_window [class="Google-chrome" title="^7:"]  move container to workspace 7
+for_window [class="Google-chrome" title="^8:"]  move container to workspace 8
+for_window [class="Google-chrome" title="^9:"]  move container to workspace 9
+for_window [class="Google-chrome" title="^10:"] move container to workspace 10
 
 # Add labels
 #for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[CHROME]</span> %title"
@@ -197,10 +199,10 @@ for_window [class="Gnome-terminal" title="^scratchpad$"] move scratchpad
 # ==============================================================================
 
 # $mod+? - Show keyboard shortcuts
-bindsym $mod+Shift+slash exec i3-shortcuts
+bindsym $mod+Shift+slash $exec i3-shortcuts
 
 # $mod+i - Get window info
-bindsym --release $mod+i exec --no-startup-id i3-window-info
+bindsym --release $mod+i $exec i3-window-info
 
 #bindsym --release $mod+shift+i exec --no-startup-id i3-test-focus
 
@@ -208,7 +210,7 @@ bindsym --release $mod+i exec --no-startup-id i3-window-info
 bindsym $mod+s exec --no-startup-id i3-rofi-workspace
 
 # Lock
-bindsym $mod+z exec --no-startup-id ",lock"
+bindsym $mod+z $exec --no-startup-id ",lock"
 
 
 # kill only the About dialog from Firefox
@@ -432,8 +434,12 @@ bindsym $mod+Shift+c restart
 bindsym $mod+Shift+e exec i3-nagbar-exit
 
 # resize window (you can also use the mouse for that)
-bindsym $mod+r mode "resize"
-mode "resize" {
+# TODO: Figure out why changing color doesn't work
+# https://www.reddit.com/r/i3wm/comments/100xdw7/comment/j2ksu88/
+#bindsym $mod+r exec i3-msg "client.focused $urgent-bg-color $focused-bg-color $focused-text-color $indicator-color" ; mode resize
+bindsym $mod+r mode resize
+
+mode resize {
 	bindsym shift+h resize shrink width  500 px or 20 ppt, move position center
 	bindsym shift+j resize shrink height 200 px or 20 ppt, move position center
 	bindsym shift+k resize grow   height 200 px or 20 ppt, move position center
