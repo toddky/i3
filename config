@@ -27,7 +27,8 @@
 #   - https://www.reddit.com/r/i3wm/comments/z7f7j6/comment/iy71yv6/
 # - Suspend/Hibernate
 #   - https://www.reddit.com/r/i3wm/comments/z62hwl/comment/iy2am4j/
-
+# - TODO: Flash focus
+#   - https://github.com/fennerm/flashfocus
 
 # i3 config file (v4)
 set $alt Mod1
