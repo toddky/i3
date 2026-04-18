@@ -246,7 +246,7 @@ bindsym $mod+Return [class="obsidian"] scratchpad show
 # Send and open scratchpad
 bindsym $mod+y exec i3-scratchpad-hide
 bindsym $mod+p scratchpad show
-bindsym $mod+Shift+p move scratchpad
+#bindsym $mod+Shift+p move scratchpad
 #bindsym $mod+Shift+minus move scratchpad
 #bindsym $mod+minus scratchpad show
 
@@ -337,16 +337,16 @@ bindsym $mod+9 exec --no-startup-id i3-select "$ws9"
 bindsym $mod+0 exec --no-startup-id i3-select "$ws10"
 
 # Send to workspace
-bindsym $mod+shift+1 send container to workspace "$ws1", workspace "$ws1"
-bindsym $mod+shift+2 send container to workspace "$ws2", workspace "$ws2"
-bindsym $mod+shift+3 send container to workspace "$ws3", workspace "$ws3"
-bindsym $mod+shift+4 send container to workspace "$ws4", workspace "$ws4"
-bindsym $mod+shift+5 send container to workspace "$ws5", workspace "$ws5"
-bindsym $mod+shift+6 send container to workspace "$ws6", workspace "$ws6"
-bindsym $mod+shift+7 send container to workspace "$ws7", workspace "$ws7"
-bindsym $mod+shift+8 send container to workspace "$ws8", workspace "$ws8"
-bindsym $mod+shift+9 send container to workspace "$ws9", workspace "$ws9"
-bindsym $mod+shift+0 send container to workspace "$ws0", workspace "$ws0"
+bindsym $mod+shift+1 move container to workspace $ws1, workspace $ws1
+bindsym $mod+shift+2 move container to workspace $ws2, workspace $ws2
+bindsym $mod+shift+3 move container to workspace $ws3, workspace $ws3
+bindsym $mod+shift+4 move container to workspace $ws4, workspace $ws4
+bindsym $mod+shift+5 move container to workspace $ws5, workspace $ws5
+bindsym $mod+shift+6 move container to workspace $ws6, workspace $ws6
+bindsym $mod+shift+7 move container to workspace $ws7, workspace $ws7
+bindsym $mod+shift+8 move container to workspace $ws8, workspace $ws8
+bindsym $mod+shift+9 move container to workspace $ws9, workspace $ws9
+bindsym $mod+shift+0 move container to workspace $ws10, workspace $ws10
 
 # Goto workspace
 #bindsym $mod+g exec --no-startup-id i3-input -F 'exec i3-select %s' -P 'Select: ' 
@@ -484,12 +484,14 @@ mode resize {
 # LAUNCHER
 # ==============================================================================
 
-# Open Chrome
-set $mode_launcher Launch: [c]hrome [t]erminal
+set $mode_launcher Launch: [t]erminal [s]lack [g]mail [c]alendar [b]rave
 bindsym $mod+o mode "$mode_launcher"
 mode "$mode_launcher" {
-	bindsym c exec --no-startup-id /opt/google/chrome/chrome; mode default
 	bindsym t exec --no-startup-id ",term"; mode default
+	bindsym s exec --no-startup-id /opt/brave.com/brave/brave-browser --profile-directory=Default --app-id=hlmdebigikgmfiolclpjlncpmpflnnjk; mode default
+	bindsym g exec --no-startup-id /opt/brave.com/brave/brave-browser --profile-directory=Default --app-id=fmgjjmmmlfnkbppncabfkddbjimcfncm; mode default
+	bindsym c exec --no-startup-id /opt/brave.com/brave/brave-browser --profile-directory=Default --app-id=kjbdgfilnfhdoflbpgamdcdgpehopbep; mode default
+	bindsym b exec --no-startup-id brave-browser; mode default
 	bindsym q mode default
 
 	bindsym Return exec i3-term; mode default
@@ -600,7 +602,7 @@ bindsym $mod+$alt+z exec "i3-focus-mark z"
 # ==============================================================================
 bindsym $mod+a focus output primary; exec i3-select "$ws2"
 
-#bindsym --release $mod+shift+p exec --no-startup-id ,screenshot
+bindsym --release $mod+shift+p exec --no-startup-id i3-screenshot
 
 # TODO: This was a chat notification:
 #assign [class="Dunst"] $workspace
