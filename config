@@ -162,27 +162,39 @@ client.urgent           $urgent-bg-color    $urgent-bg-color    $urgent-text-col
 # TODO: Test if these work:
 #   WM_CLASS(STRING) = "spotify", "Spotify"
 #   WM_NAME(STRING) = "Spotify"
-for_window [class="Spotify"] move container to workspace 2, mark s
-assign [class="Google-chrome" title="^YouTube Music"] 2
+for_window [class="Spotify"] move container to workspace $ws2, mark s
+assign [class="Google-chrome" title="^YouTube Music"] $ws2
 
 # Workspace 2 for Mail/Chat/Calendar
-for_window [class="Google-chrome" title="^Gmail"]           move container to workspace 2, mark g
-for_window [class="Google-chrome" title="^Google Chat"]     move container to workspace 2, mark h
-for_window [class="Google-chrome" title="^Google Calendar"] move container to workspace 2, mark c
+for_window [class="Google-chrome" title="^Gmail"]           move container to workspace $ws2, mark g
+for_window [class="Google-chrome" title="^Google Chat"]     move container to workspace $ws2, mark h
+for_window [class="Google-chrome" title="^Google Calendar"] move container to workspace $ws2, mark c
 
 # Automatically assign Chrome windows to workspace
-for_window [class="Google-chrome" title="^1:"]  move container to workspace 1
-for_window [class="Google-chrome" title="^2:"]  move container to workspace 2
-for_window [class="Google-chrome" title="^3:"]  move container to workspace 3
-for_window [class="Google-chrome" title="^4:"]  move container to workspace 4
-for_window [class="Google-chrome" title="^5:"]  move container to workspace 5
-for_window [class="Google-chrome" title="^6:"]  move container to workspace 6
-for_window [class="Google-chrome" title="^7:"]  move container to workspace 7
-for_window [class="Google-chrome" title="^8:"]  move container to workspace 8
-for_window [class="Google-chrome" title="^9:"]  move container to workspace 9
-for_window [class="Google-chrome" title="^10:"] move container to workspace 10
+for_window [class="Google-chrome" title="^1:"]  move container to workspace $ws1
+for_window [class="Google-chrome" title="^2:"]  move container to workspace $ws2
+for_window [class="Google-chrome" title="^3:"]  move container to workspace $ws3
+for_window [class="Google-chrome" title="^4:"]  move container to workspace $ws4
+for_window [class="Google-chrome" title="^5:"]  move container to workspace $ws5
+for_window [class="Google-chrome" title="^6:"]  move container to workspace $ws6
+for_window [class="Google-chrome" title="^7:"]  move container to workspace $ws7
+for_window [class="Google-chrome" title="^8:"]  move container to workspace $ws8
+for_window [class="Google-chrome" title="^9:"]  move container to workspace $ws9
+for_window [class="Google-chrome" title="^10:"] move container to workspace $ws10
 
-for_window [class="Google-chrome" title="desktop--vnc"] move container to workspace 4
+# Automatically assign Brave windows to workspace
+for_window [class="Brave-browser" title="^1:"]  move container to workspace $ws1
+for_window [class="Brave-browser" title="^2:"]  move container to workspace $ws2
+for_window [class="Brave-browser" title="^3:"]  move container to workspace $ws3
+for_window [class="Brave-browser" title="^4:"]  move container to workspace $ws4
+for_window [class="Brave-browser" title="^5:"]  move container to workspace $ws5
+for_window [class="Brave-browser" title="^6:"]  move container to workspace $ws6
+for_window [class="Brave-browser" title="^7:"]  move container to workspace $ws7
+for_window [class="Brave-browser" title="^8:"]  move container to workspace $ws8
+for_window [class="Brave-browser" title="^9:"]  move container to workspace $ws9
+for_window [class="Brave-browser" title="^10:"] move container to workspace $ws10
+
+for_window [class="Google-chrome" title="desktop--vnc"] move container to workspace $ws4
 
 # Add labels
 #for_window [class="Google-chrome"] title_format "<span foreground='yellow'>[CHROME]</span> %title"
@@ -190,6 +202,7 @@ for_window [class="Alacritty"]      title_format "<span foreground='yellow'>[T]<
 for_window [class="kitty"]          title_format "<span foreground='yellow'>[T]</span>%title"
 for_window [class="Gnome-terminal"] title_format "<span foreground='yellow'>[T]</span>%title"
 for_window [class="Google-chrome"]  title_format "<span foreground='yellow'>[C]</span>%title"
+for_window [class="Brave-browser"]  title_format "<span foreground='yellow'>[B]</span>%title"
 for_window [class="Firefox"]        title_format "<span foreground='yellow'>[F]</span>%title"
 
 # Scratch terminal
@@ -488,7 +501,7 @@ mode resize {
 set $mode_launcher Launch: [t]erminal [s]lack [g]mail [c]alendar [b]rave
 bindsym $mod+o mode "$mode_launcher"
 mode "$mode_launcher" {
-	bindsym t exec --no-startup-id ",term"; mode default
+	bindsym t exec --no-startup-id alacritty; mode default
 	bindsym s exec --no-startup-id /opt/brave.com/brave/brave-browser --profile-directory=Default --app-id=hlmdebigikgmfiolclpjlncpmpflnnjk; mode default
 	bindsym g exec --no-startup-id /opt/brave.com/brave/brave-browser --profile-directory=Default --app-id=fmgjjmmmlfnkbppncabfkddbjimcfncm; mode default
 	bindsym c exec --no-startup-id /opt/brave.com/brave/brave-browser --profile-directory=Default --app-id=kjbdgfilnfhdoflbpgamdcdgpehopbep; mode default
@@ -609,8 +622,7 @@ bindsym --release $mod+shift+p exec --no-startup-id i3-screenshot
 #assign [class="Dunst"] $workspace
 
 # Add fade and transition effects
-# sudo apt install compton
-exec compton -f
+exec picom --backend glx
 
 # TODO: `chrome-chat`
 # TODO: `chrome-calendar`
