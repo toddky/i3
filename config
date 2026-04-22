@@ -158,17 +158,23 @@ client.urgent           $urgent-bg-color    $urgent-bg-color    $urgent-text-col
 # - The X11 name of the machine
 # - This corresponds to the machine criterion
 
-# Workspace 2 for Media
-# TODO: Test if these work:
-#   WM_CLASS(STRING) = "spotify", "Spotify"
-#   WM_NAME(STRING) = "Spotify"
-for_window [class="Spotify"] move container to workspace $ws2, mark s
-assign [class="Google-chrome" title="^YouTube Music"] $ws2
+# Workspace 9 for Media
+for_window [class="Spotify"] move container to workspace $ws9, mark s
+assign [class="Google-chrome" title="^YouTube Music"] $ws9
 
-# Workspace 2 for Mail/Chat/Calendar
-for_window [class="Google-chrome" title="^Gmail"]           move container to workspace $ws2, mark g
-for_window [class="Google-chrome" title="^Google Chat"]     move container to workspace $ws2, mark h
-for_window [class="Google-chrome" title="^Google Calendar"] move container to workspace $ws2, mark c
+# Workspace 8 for Zoom
+for_window [class="zoom"] move container to workspace $ws8
+
+# Workspace 3 for Mail/Chat/Calendar
+for_window [class="Google-chrome|Brave-browser" title="^Gmail"]           move container to workspace $ws3, mark g
+for_window [class="Google-chrome|Brave-browser" title="^Google Chat"]     move container to workspace $ws3, mark h
+for_window [class="Google-chrome|Brave-browser" title="^Google Calendar"] move container to workspace $ws3, mark c
+for_window [class="Brave-browser" title="Slack$"]                          move container to workspace $ws3
+
+# Workspace 2 for Terminals
+for_window [class="Alacritty"]      move container to workspace $ws2
+for_window [class="Gnome-terminal"] move container to workspace $ws2
+for_window [class="kitty"]          move container to workspace $ws2
 
 # Automatically assign Chrome windows to workspace
 for_window [class="Google-chrome" title="^1:"]  move container to workspace $ws1
