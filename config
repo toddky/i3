@@ -67,7 +67,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- ",lock" --nofork
 exec --no-startup-id nm-applet
 
 # start dmenu (a program launcher)
-bindsym $mod+d $exec dmenu_run
+bindsym $mod+space $exec dmenu_run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -276,7 +276,7 @@ bindsym $mod+p scratchpad show
 # I can use mod(+shift)+tab.
 
 # Kill notifications
-bindsym $mod+space exec dunstctl close
+bindsym $mod+d exec dunstctl close
 
 # TODO: Mouse mode via xdotool
 # https://www.reddit.com/r/i3wm/comments/4bhypw/comment/d19dwoz/?utm_source=share&utm_medium=web2x&context=3 
