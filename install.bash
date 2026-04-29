@@ -34,5 +34,8 @@ packages+=(pulseaudio-utils)
 # Mic control
 packages+=(alsa-utils)
 
+# Media control
+packages+=(playerctl)
+
 sudo apt update
 sudo apt install -y "${packages[@]}"
