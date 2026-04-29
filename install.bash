@@ -28,5 +28,11 @@ packages+=(fprintd)
 # Battery status
 packages+=(acpi)
 
+# Volume control
+packages+=(pulseaudio-utils)
+
+# Mic control
+packages+=(alsa-utils)
+
 sudo apt update
 sudo apt install -y "${packages[@]}"
