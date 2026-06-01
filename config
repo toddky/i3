@@ -169,9 +169,11 @@ assign [class="Google-chrome" title="^YouTube Music"] $ws9
 
 # Workspace 8 for Zoom
 for_window [class="zoom"] move container to workspace $ws8
-# Float all Zoom windows. To float dialogs only (keep meeting window tiled),
-# replace with: for_window [class="zoom" title="^(?!Zoom Meeting).*"] floating enable
+# Float Zoom windows. Two mutually exclusive options below — keep exactly one.
+# Option A (active): float every Zoom window, including the meeting window.
 for_window [class="zoom"] floating enable
+# Option B: float only dialogs/popups, keep the main meeting window tiled.
+#for_window [class="zoom" title="^(?!Zoom Meeting).*"] floating enable
 
 # Workspace 3 for Mail/Chat/Calendar
 for_window [class="Google-chrome|Brave-browser" title="^Gmail"]           move container to workspace $ws3, mark g
