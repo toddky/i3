@@ -50,6 +50,11 @@ font pango:DejaVu Sans Mono 10
 #new_window 1pixel
 default_floating_border pixel 1
 
+# Load X resources (Xft.dpi for font/UI scaling) on startup and config reload
+# exec_always (not exec) so a config reload re-applies DPI tweaks without logout
+# placed before autostart so apps launch after DPI is set and read the right value
+exec_always --no-startup-id xrdb -merge ~/.Xresources
+
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
@@ -164,6 +169,9 @@ assign [class="Google-chrome" title="^YouTube Music"] $ws9
 
 # Workspace 8 for Zoom
 for_window [class="zoom"] move container to workspace $ws8
+# Float all Zoom windows. To float dialogs only (keep meeting window tiled),
+# replace with: for_window [class="zoom" title="^(?!Zoom Meeting).*"] floating enable
+for_window [class="zoom"] floating enable
 
 # Workspace 3 for Mail/Chat/Calendar
 for_window [class="Google-chrome|Brave-browser" title="^Gmail"]           move container to workspace $ws3, mark g
@@ -589,7 +597,6 @@ bindsym $mod+Shift+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
 bindsym $mod+m exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
 # Quickly jump to mark
-bindsym $mod+$alt+a exec "i3-focus-mark a"
 bindsym $mod+$alt+b exec "i3-focus-mark b"
 bindsym $mod+$alt+c exec "i3-focus-mark c"
 bindsym $mod+$alt+d exec "i3-focus-mark d"
@@ -622,7 +629,7 @@ bindsym $mod+$alt+z exec "i3-focus-mark z"
 # ==============================================================================
 bindsym $mod+a focus output primary; exec i3-select "$ws2"
 
-bindsym --release $mod+shift+p exec --no-startup-id i3-screenshot
+bindsym --release $mod+e exec --no-startup-id i3-screenshot
 
 # TODO: This was a chat notification:
 #assign [class="Dunst"] $workspace
