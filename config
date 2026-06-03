@@ -631,6 +631,8 @@ bindsym $mod+$alt+z exec "i3-focus-mark z"
 # ==============================================================================
 bindsym $mod+a focus output primary; exec i3-select "$ws2"
 
+bindsym $mod+$alt+a exec --no-startup-id i3-setup-monitors
+
 bindsym --release $mod+e exec --no-startup-id i3-screenshot
 
 # TODO: This was a chat notification:
