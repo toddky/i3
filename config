@@ -639,7 +639,11 @@ bindsym --release $mod+e exec --no-startup-id i3-screenshot
 #assign [class="Dunst"] $workspace
 
 # Add fade and transition effects
-exec picom --backend glx
+# --no-use-damage: forces a full repaint every frame instead of only damaged regions.
+# Without it, picom's glx backend missed damage events and left stale cached textures.
+# Missed damage is more likely because of the amdgpu `EnablePageFlip "false"` workaround.
+# Trade-off: full repaints use marginally more GPU/power, negligible on desktop, slight extra battery drain on laptop.
+exec picom --backend glx --no-use-damage
 
 # TODO: `chrome-chat`
 # TODO: `chrome-calendar`
