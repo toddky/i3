@@ -1,9 +1,28 @@
 #!/usr/bin/env bash
 # USAGE: setup.sh
-# DESCRIPTION: Install sway dependencies (sway analog of ~/.config/i3/install.bash)
-# i3 stays installed and untouched; sway shows up as a separate session at the
-# login screen. Post-switch tasks live in ~/SWAY_NEXT.md.
+# DESCRIPTION: Link ~/.config/sway to this directory and install sway dependencies
 
+# ==============================================================================
+# SETUP
+# ==============================================================================
+# pwd -P resolves the symlink, so running ~/.config/sway/setup.sh still finds the real directory.
+sway_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+link_dir="${XDG_CONFIG_HOME:-$HOME/.config}/sway"
+
+if [[ "$(readlink -f "$link_dir")" == "$sway_dir" ]]; then
+	echo "$link_dir already links to $sway_dir"
+elif [[ -e "$link_dir" || -L "$link_dir" ]]; then
+	echo "ERROR: $link_dir exists and is not a link to $sway_dir; move it aside and re-run." 1>&2
+	exit 1
+else
+	ln -s "$sway_dir" "$link_dir" || exit 1
+	echo "Linked $link_dir -> $sway_dir"
+fi
+
+
+# ==============================================================================
+# INSTALL
+# ==============================================================================
 packages=()
 
 # Core (sway ships swaybar/swaynag/swaymsg; i3blocks feeds swaybar as-is)
