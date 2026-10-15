@@ -1,0 +1,188 @@
+
+# vim: ft=swayconfig:
+
+# ==============================================================================
+# SWAY CONFIG — ported from ~/.config/i3/config (see ~/SWAY.md)
+# ==============================================================================
+# Sway parses i3 config syntax; lines marked "SWAY:" are the ones that changed.
+# Complete reference: man 5 sway
+#
+# Helper scripts in ~/bin (i3-select, i3-my-focus, ,lock, ...) are WM-neutral:
+# they branch on $WAYLAND_DISPLAY, so both the i3 and sway sessions keep working.
+
+
+# ==============================================================================
+# INCLUDE
+# ==============================================================================
+# Shared with i3; defines $mod, $alt, $exec and $ws1..$ws10, so it must come first.
+include ../common.conf
+
+
+# ==============================================================================
+# EXEC
+# ==============================================================================
+
+# SWAY: hand the Wayland session env to systemd/D-Bus user services so
+# xdg-desktop-portal picks the wlr backend (Zoom/browser screen sharing).
+# Same as /etc/sway/config.d/50-systemd-user.conf, which this config doesn't
+# include, plus XDG_CURRENT_DESKTOP (the user manager outlives logout and
+# would otherwise keep i3's value).
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+# SWAY: --environment sway (was i3)
+exec --no-startup-id dex --autostart --environment sway
+
+# SWAY: swayidle replaces xss-lock — lock before suspend and on `loginctl lock-session`
+exec swayidle -w before-sleep ',lock' lock ',lock'
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+# SWAY: swaybar's tray is StatusNotifierItem-only; --indicator switches
+# nm-applet from XEmbed to SNI so the icon actually shows up.
+exec --no-startup-id nm-applet --indicator
+
+# SWAY: kanshi applies the right output layout (work/home/laptop) on hotplug.
+# Replaces i3-setup-monitors + variants. Config: ~/.config/kanshi/config
+exec kanshi
+# `reload` resets every output to scale 1 and kanshi doesn't notice, so
+# sway-monitors re-applies the layout on every reload (and at login).
+exec_always sway-monitors
+
+# SWAY: wallpaper (feh only worked on X11)
+exec ",wallpaper"
+
+# SWAY: launcher — fuzzel (dmenu_run is X11-only; `wmenu-run` ships with sway ≥1.9)
+bindsym $mod+space $exec fuzzel
+
+
+# ==============================================================================
+# ASSIGN
+# ==============================================================================
+# SWAY: class= only matches XWayland windows (those rules are in common.conf);
+# native Wayland windows need app_id=, so every rule gets an app_id= copy here.
+#
+# Native app_ids: google-chrome, brave-browser, and for Brave PWA app windows
+# brave-<extension-id>-Default (verify with $mod+i / i3-window-info).
+
+# Workspace 9 for Media
+for_window [app_id="spotify"] move container to workspace $ws9, mark s
+assign [app_id="google-chrome" title="^YouTube Music"] $ws9
+
+# Workspace 8 for Zoom (Zoom runs as XWayland under sway, class= keeps working)
+# Float Zoom popups (chat, participants, settings); keep the main window and the
+# meeting window tiled. Floating the main windows let Zoom size itself (it asked
+# for the laptop panel's 1920x1177 on the 1080p HDMI and covered the bar).
+for_window [class="zoom" title="^(?!Zoom Workplace|Zoom Meeting|Meeting$|Zoom$).*"] floating enable
+
+# Workspace 3 for Mail/Chat/Calendar
+for_window [app_id="^(google-chrome|brave-browser)$" title="^Gmail"]           move container to workspace $ws3, mark g
+for_window [app_id="^(google-chrome|brave-browser)$" title="^Google Chat"]     move container to workspace $ws3, mark h
+for_window [app_id="^(google-chrome|brave-browser)$" title="^Google Calendar"] move container to workspace $ws3, mark c
+# Brave PWA app windows (ids match the $mode_launcher entries below)
+for_window [app_id="^brave-hlmdebigikgmfiolclpjlncpmpflnnjk-Default$"] move container to workspace $ws3
+for_window [app_id="^brave-fmgjjmmmlfnkbppncabfkddbjimcfncm-Default$"] move container to workspace $ws3, mark g
+for_window [app_id="^brave-kjbdgfilnfhdoflbpgamdcdgpehopbep-Default$"] move container to workspace $ws3, mark c
+
+# Workspace 2 for Terminals
+for_window [app_id="^Alacritty$"]                                move container to workspace $ws2
+for_window [app_id="^(gnome-terminal-server|org.gnome.Terminal)$"] move container to workspace $ws2
+for_window [app_id="^kitty$"]                                    move container to workspace $ws2
+
+# Automatically assign Chrome/Brave windows to workspace by "<n>:" title prefix
+for_window [app_id="^(google-chrome|brave-browser)$" title="^1:"]  move container to workspace $ws1
+for_window [app_id="^(google-chrome|brave-browser)$" title="^2:"]  move container to workspace $ws2
+for_window [app_id="^(google-chrome|brave-browser)$" title="^3:"]  move container to workspace $ws3
+for_window [app_id="^(google-chrome|brave-browser)$" title="^4:"]  move container to workspace $ws4
+for_window [app_id="^(google-chrome|brave-browser)$" title="^5:"]  move container to workspace $ws5
+for_window [app_id="^(google-chrome|brave-browser)$" title="^6:"]  move container to workspace $ws6
+for_window [app_id="^(google-chrome|brave-browser)$" title="^7:"]  move container to workspace $ws7
+for_window [app_id="^(google-chrome|brave-browser)$" title="^8:"]  move container to workspace $ws8
+for_window [app_id="^(google-chrome|brave-browser)$" title="^9:"]  move container to workspace $ws9
+for_window [app_id="^(google-chrome|brave-browser)$" title="^10:"] move container to workspace $ws10
+
+for_window [app_id="google-chrome" title="desktop--vnc"] move container to workspace $ws4
+
+# Add labels
+for_window [app_id="^Alacritty$"]                                  title_format "<span foreground='yellow'>[T]</span>%title"
+for_window [app_id="^kitty$"]                                      title_format "<span foreground='yellow'>[T]</span>%title"
+for_window [app_id="^(gnome-terminal-server|org.gnome.Terminal)$"] title_format "<span foreground='yellow'>[T]</span>%title"
+for_window [app_id="^google-chrome$"]                              title_format "<span foreground='yellow'>[C]</span>%title"
+for_window [app_id="^brave"]                                       title_format "<span foreground='yellow'>[B]</span>%title"
+for_window [app_id="^firefox$"]                                    title_format "<span foreground='yellow'>[F]</span>%title"
+
+# Scratch terminal
+for_window [app_id="^Alacritty$"                                  title="^scratchpad$"] move scratchpad
+for_window [app_id="^(gnome-terminal-server|org.gnome.Terminal)$" title="^scratchpad$"] move scratchpad
+
+
+# ==============================================================================
+# EXPERIMENTS
+# ==============================================================================
+
+# Open workspace
+# SWAY: i3-rofi-workspace doesn't exist on PATH (binding was already dead under i3)
+#bindsym $mod+s exec --no-startup-id i3-rofi-workspace
+
+# Notes
+# SWAY: one binding for both XWayland (class) and native (app_id) Obsidian;
+# binding the same key twice makes sway show a config-error swaynag.
+bindsym $mod+Return [class="obsidian"] scratchpad show; [app_id="obsidian"] scratchpad show
+
+# Send and open scratchpad
+# SWAY: i3-scratchpad-hide doesn't exist on PATH (binding was already dead under i3)
+#bindsym $mod+y exec i3-scratchpad-hide
+
+# SWAY: there is no `restart` — `reload` is all you need (sway never restarts in place)
+bindsym $mod+Shift+c reload
+
+
+# ==============================================================================
+# LAUNCHER
+# ==============================================================================
+
+set $mode_launcher Launch: [t]erminal [s]lack [g]mail [c]alendar [b]rave
+bindsym $mod+o mode "$mode_launcher"
+mode "$mode_launcher" {
+	bindsym t exec --no-startup-id alacritty; mode default
+	bindsym s exec --no-startup-id /opt/brave.com/brave/brave-browser --ozone-platform=x11 --profile-directory=Default --app-id=hlmdebigikgmfiolclpjlncpmpflnnjk; mode default
+	bindsym g exec --no-startup-id /opt/brave.com/brave/brave-browser --ozone-platform=x11 --profile-directory=Default --app-id=fmgjjmmmlfnkbppncabfkddbjimcfncm; mode default
+	bindsym c exec --no-startup-id /opt/brave.com/brave/brave-browser --ozone-platform=x11 --profile-directory=Default --app-id=kjbdgfilnfhdoflbpgamdcdgpehopbep; mode default
+	bindsym b exec --no-startup-id brave-browser --ozone-platform=x11; mode default
+	bindsym q mode default
+
+	bindsym Return exec i3-term; mode default
+}
+
+
+# ==============================================================================
+# MARK
+# ==============================================================================
+
+# SWAY: i3-input does not exist; i3-mark/i3-goto-mark use wl-prompt (fuzzel/wmenu)
+bindsym $mod+Shift+m exec i3-mark
+bindsym $mod+m exec i3-goto-mark
+
+# Quickly jump to mark
+# NOTE: i3-focus-mark doesn't exist on PATH (these were already dead under i3).
+# Kept commented in case the script comes back.
+#bindsym $mod+$alt+b exec "i3-focus-mark b"
+# ... (all 25 letter bindings elided; restore from ~/.config/i3/config if needed)
+
+
+# ==============================================================================
+# SPECIAL
+# ==============================================================================
+# SWAY: no "primary output" concept; i3-focus-primary focuses the leftmost output
+bindsym $mod+a exec i3-focus-primary && i3-select "$ws2"
+
+# SWAY: kanshi handles layouts automatically on hotplug; this re-applies by hand
+bindsym $mod+$alt+a exec sway-monitors
+
+bindsym $mod+e exec --no-startup-id i3-screenshot
+
+# SWAY: picom deleted — sway composites natively (fade/transparency effects are
+# gone; SwayFX exists if missed). The amdgpu EnablePageFlip/--no-use-damage
+# workarounds (GPU.md, FREEZE.md) are Xorg-only and don't apply here.
+
