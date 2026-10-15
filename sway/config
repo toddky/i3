@@ -142,6 +142,8 @@ bindsym $mod+Shift+c reload
 # LAUNCHER
 # ==============================================================================
 
+# SWAY: Brave runs on XWayland because sway 1.9 drops native-Wayland Brave on tab drag; blurry at 1.33x.
+# Brave ignores ~/.config/brave-flags.conf, so the flag has to be on every launch command.
 set $mode_launcher Launch: [t]erminal [s]lack [g]mail [c]alendar [b]rave
 bindsym $mod+o mode "$mode_launcher"
 mode "$mode_launcher" {
