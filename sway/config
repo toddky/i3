@@ -43,11 +43,8 @@ exec swayidle -w before-sleep ',lock' lock ',lock'
 # nm-applet from XEmbed to SNI so the icon actually shows up.
 exec --no-startup-id nm-applet --indicator
 
-# SWAY: kanshi applies the right output layout (work/home/laptop) on hotplug.
-# Replaces i3-setup-monitors + variants. Config: ~/.config/kanshi/config
-exec kanshi
-# `reload` resets every output to scale 1 and kanshi doesn't notice, so
-# sway-monitors re-applies the layout on every reload (and at login).
+# SWAY: sway-monitors applies the work/home/laptop layout (replaces i3-setup-monitors).
+# exec_always because `reload` resets every output to scale 1; there is no hotplug, so use $mod+$alt+a after docking.
 exec_always sway-monitors
 
 # SWAY: wallpaper (feh only worked on X11)
@@ -179,7 +176,7 @@ bindsym $mod+m exec i3-goto-mark
 # SWAY: no "primary output" concept; i3-focus-primary focuses the leftmost output
 bindsym $mod+a exec i3-focus-primary && i3-select "$ws2"
 
-# SWAY: kanshi handles layouts automatically on hotplug; this re-applies by hand
+# SWAY: re-apply the monitor layout after plugging in or unplugging a monitor
 bindsym $mod+$alt+a exec sway-monitors
 
 bindsym $mod+e exec --no-startup-id i3-screenshot
