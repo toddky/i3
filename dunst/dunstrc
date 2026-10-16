@@ -1,0 +1,7 @@
+[global]
+    # Keep unlimited notification history (0 = no cap; default is 20).
+    history_length = 0
+
+    # Pin notifications to one monitor instead of following focus.
+    # The index lives in dunstrc.d/monitor.conf (untracked) because i3-setup-monitors rewrites it per layout.
+    follow = none
