@@ -144,7 +144,7 @@ bindsym $mod+Shift+c reload
 set $mode_launcher Launch: [t]erminal [s]lack [g]mail [c]alendar [b]rave
 bindsym $mod+o mode "$mode_launcher"
 mode "$mode_launcher" {
-	bindsym t exec --no-startup-id alacritty; mode default
+	bindsym t exec --no-startup-id i3-term; mode default
 	bindsym s exec --no-startup-id /opt/brave.com/brave/brave-browser --ozone-platform=x11 --profile-directory=Default --app-id=hlmdebigikgmfiolclpjlncpmpflnnjk; mode default
 	bindsym g exec --no-startup-id /opt/brave.com/brave/brave-browser --ozone-platform=x11 --profile-directory=Default --app-id=fmgjjmmmlfnkbppncabfkddbjimcfncm; mode default
 	bindsym c exec --no-startup-id /opt/brave.com/brave/brave-browser --ozone-platform=x11 --profile-directory=Default --app-id=kjbdgfilnfhdoflbpgamdcdgpehopbep; mode default
