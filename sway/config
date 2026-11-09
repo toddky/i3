@@ -104,6 +104,7 @@ for_window [app_id="google-chrome" title="desktop--vnc"] move container to works
 # Add labels
 for_window [app_id="^Alacritty$"]                                  title_format "<span foreground='yellow'>[T]</span>%title"
 for_window [app_id="^kitty$"]                                      title_format "<span foreground='yellow'>[T]</span>%title"
+for_window [app_id="^com.mitchellh.ghostty$"]                      title_format "<span foreground='yellow'>[T]</span>%title"
 for_window [app_id="^(gnome-terminal-server|org.gnome.Terminal)$"] title_format "<span foreground='yellow'>[T]</span>%title"
 for_window [app_id="^google-chrome$"]                              title_format "<span foreground='yellow'>[C]</span>%title"
 for_window [app_id="^brave"]                                       title_format "<span foreground='yellow'>[B]</span>%title"
