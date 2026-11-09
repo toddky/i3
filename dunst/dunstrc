@@ -4,3 +4,7 @@
 
     # Show notifications on the monitor in use; overrides `monitor =`, so no per-WM index is needed.
     follow = keyboard
+
+[urgency_normal]
+    # Progress bar color (the volume popup), matching the terminals' cyan.
+    highlight = "#74cce9"
