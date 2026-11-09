@@ -121,6 +121,9 @@ for_window [class="^Spotify$"]                                     title_format 
 for_window [app_id="^Alacritty$"                                  title="^scratchpad$"] move scratchpad
 for_window [app_id="^(gnome-terminal-server|org.gnome.Terminal)$" title="^scratchpad$"] move scratchpad
 
+# Popup menus (sway-bluetooth-picker): wofi --normal-window floats; the picker moves it next to the clicked bar icon.
+for_window [app_id="^wofi$"] floating enable, sticky enable, border none
+
 
 # ==============================================================================
 # EXPERIMENTS
