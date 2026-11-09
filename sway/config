@@ -17,6 +17,10 @@
 # Shared with i3; defines $mod, $alt, $exec and $ws1..$ws10, so it must come first.
 include ../common.conf
 
+# SWAY: Thicker tab dividers and roomier titles; i3 has no equivalent.
+titlebar_border_thickness 2
+titlebar_padding 10 4
+
 
 # ==============================================================================
 # EXEC
