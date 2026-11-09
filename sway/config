@@ -14,6 +14,13 @@
 # ==============================================================================
 # INCLUDE
 # ==============================================================================
+# SWAY: Turn the focused window orange in resize mode and back to blue on the way
+# out; common.conf runs these hooks from its resize bindings. They must be set
+# before the include, and sway expands variables at set time, so the colors are
+# spelled out: $resize_off has to match client.focused in common.conf.
+set $resize_on  client.focused #0a0f1a #b5651d #f0f0f0 #b5651d #b5651d
+set $resize_off client.focused #0a0f1a #3567a8 #f0f0f0 #3567a8
+
 # Shared with i3; defines $mod, $alt, $exec and $ws1..$ws10, so it must come first.
 include ../common.conf
 
