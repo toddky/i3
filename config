@@ -18,10 +18,6 @@
 # ==============================================================================
 # INCLUDE
 # ==============================================================================
-# i3 cannot change client colors at runtime, so the resize-mode hooks do nothing
-set $resize_on  nop
-set $resize_off nop
-
 # Shared with sway; defines $mod, $alt, $exec and $ws1..$ws10, so it must come first.
 include common.conf
 
