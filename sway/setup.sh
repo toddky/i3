@@ -38,8 +38,14 @@ packages+=(kanshi)
 # Launcher and text prompts (dmenu/rofi/i3-input equivalents; used by wl-prompt)
 packages+=(fuzzel)
 
+# Bluetooth popup menu from the bar (sway-bluetooth-picker)
+packages+=(wofi)
+packages+=(bluez)          # bluetoothctl
+packages+=(jq)             # parses swaymsg JSON; sway-monitors needs it too
+
 # Notifications (dunst runs natively on Wayland)
 packages+=(dunst)
+packages+=(libnotify-bin)  # notify-send, used by the bar scripts to show errors
 
 # Screenshots and clipboard (maim/scrot/xclip equivalents)
 packages+=(grim)
