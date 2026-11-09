@@ -78,3 +78,15 @@ packages+=(playerctl)
 sudo apt update
 sudo apt install -y "${packages[@]}"
 
+
+# ==============================================================================
+# GROUPS
+# ==============================================================================
+# brightnessctl writes /sys/class/backlight/*/brightness, which only root and the video group may change.
+if id -nG "$USER" | grep -qw video; then
+	echo "$USER is already in the video group"
+else
+	sudo usermod -aG video "$USER" || exit 1
+	echo "Added $USER to the video group; log out and back in for brightness keys to work"
+fi
+
