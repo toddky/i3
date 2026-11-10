@@ -211,8 +211,8 @@ bindsym $mod+m exec i3-goto-mark
 # ==============================================================================
 # SPECIAL
 # ==============================================================================
-# SWAY: no "primary output" concept; i3-focus-primary focuses the leftmost output
-bindsym $mod+a exec i3-focus-primary && i3-select "$ws2"
+# SWAY: no "primary output" concept; i3-gather uses the leftmost output
+bindsym $mod+a exec i3-gather "$ws2"
 
 # SWAY: re-apply the monitor layout after plugging in or unplugging a monitor
 bindsym $mod+$alt+a exec sway-monitors
