@@ -24,7 +24,7 @@
 set $alt Mod1
 set $mod Mod4
 set $exec exec --no-startup-id
-set $lock ",lock"
+set $lock i3-lock
 set $ws2 2
 
 # Shared with sway; defines $mod, $alt, $exec and $ws1..$ws10, so it must come first.
