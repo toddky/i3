@@ -1,23 +1,32 @@
 #!/usr/bin/env bash
 # USAGE: setup.sh
-# DESCRIPTION: Link ~/.config/sway to this directory and install sway dependencies
+# DESCRIPTION: Link ~/.config/sway to this directory and ~/.config/waybar to its waybar directory, and install sway dependencies
 
 # ==============================================================================
 # SETUP
 # ==============================================================================
 # pwd -P resolves the symlink, so running ~/.config/sway/setup.sh still finds the real directory.
 sway_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-link_dir="${XDG_CONFIG_HOME:-$HOME/.config}/sway"
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
 
-if [[ "$(readlink -f "$link_dir")" == "$sway_dir" ]]; then
-	echo "$link_dir already links to $sway_dir"
-elif [[ -e "$link_dir" || -L "$link_dir" ]]; then
-	echo "ERROR: $link_dir exists and is not a link to $sway_dir; move it aside and re-run." 1>&2
-	exit 1
-else
-	ln -s "$sway_dir" "$link_dir" || exit 1
-	echo "Linked $link_dir -> $sway_dir"
-fi
+# link-config <target dir> <link path>
+link-config() {
+	local target_dir="$1"
+	local link_dir="$2"
+	if [[ "$(readlink -f "$link_dir")" == "$target_dir" ]]; then
+		echo "$link_dir already links to $target_dir"
+	elif [[ -e "$link_dir" || -L "$link_dir" ]]; then
+		echo "ERROR: $link_dir exists and is not a link to $target_dir; move it aside and re-run." 1>&2
+		exit 1
+	else
+		ln -s "$target_dir" "$link_dir" || exit 1
+		echo "Linked $link_dir -> $target_dir"
+	fi
+}
+
+link-config "$sway_dir" "$config_dir/sway"
+# Waybar only reads its default config location when sway launches it as the bar.
+link-config "$sway_dir/waybar" "$config_dir/waybar"
 
 
 # ==============================================================================
@@ -25,9 +34,10 @@ fi
 # ==============================================================================
 packages=()
 
-# Core (sway ships swaybar/swaynag/swaymsg; i3blocks feeds swaybar as-is)
+# Core (sway ships swaynag/swaymsg)
 packages+=(sway)
-packages+=(i3blocks)
+packages+=(waybar)        # replaces swaybar, which can't open tray-icon menus
+packages+=(i3blocks)      # i3 bar under i3; Waybar reuses its bandwidth script
 packages+=(swaylock)      # i3lock equivalent
 packages+=(swayidle)      # xss-lock equivalent (lock on suspend/lock-session)
 packages+=(swaybg)        # feh --bg-fill equivalent
