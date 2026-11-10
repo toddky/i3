@@ -22,8 +22,11 @@
 		"tray"
 	],
 
+	// Scroll to cycle workspaces (wrapping at the ends, like scrolling on tab
+	// titles in common.conf); clicks do nothing, also like the tab titles.
 	"sway/workspaces": {
-		"disable-scroll": true
+		"disable-scroll": false,
+		"disable-click": true
 	},
 
 	"sway/mode": {
