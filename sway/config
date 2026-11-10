@@ -7,7 +7,7 @@
 # Sway parses i3 config syntax; lines marked "SWAY:" are the ones that changed.
 # Complete reference: man 5 sway
 #
-# Helper scripts in ~/bin (i3-select, i3-my-focus, ,lock, ...) are WM-neutral:
+# Helper scripts in ~/bin (i3-select, i3-my-focus, ...) are WM-neutral:
 # they branch on $WAYLAND_DISPLAY, so both the i3 and sway sessions keep working.
 
 
@@ -15,6 +15,7 @@
 # INCLUDE
 # ==============================================================================
 # Shared with i3; defines $mod, $alt, $exec and $ws1..$ws10, so it must come first.
+set $lock sway-lock
 include ../common.conf
 
 # SWAY: Thicker tab dividers and roomier titles; i3 has no equivalent.
@@ -61,7 +62,7 @@ exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSO
 exec --no-startup-id dex --autostart --environment sway
 
 # SWAY: swayidle replaces xss-lock — lock before suspend and on `loginctl lock-session`
-exec swayidle -w before-sleep ',lock' lock ',lock'
+exec swayidle -w before-sleep $lock lock $lock
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
