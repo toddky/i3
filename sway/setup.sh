@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # USAGE: setup.sh
-# DESCRIPTION: Link ~/.config/sway to this directory and ~/.config/waybar to its waybar directory, and install sway dependencies
+# DESCRIPTION: Link ~/.config/sway, ~/.config/waybar and ~/.config/dunst into this repo, and install sway dependencies
 
 # ==============================================================================
 # SETUP
@@ -10,6 +10,7 @@ sway_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 # link-config <target dir> <link path>
+# Links are relative (ln -r), so they survive moving or renaming the home directory.
 link-config() {
 	local target_dir="$1"
 	local link_dir="$2"
@@ -19,7 +20,7 @@ link-config() {
 		echo "ERROR: $link_dir exists and is not a link to $target_dir; move it aside and re-run." 1>&2
 		exit 1
 	else
-		ln -s "$target_dir" "$link_dir" || exit 1
+		ln -sr "$target_dir" "$link_dir" || exit 1
 		echo "Linked $link_dir -> $target_dir"
 	fi
 }
@@ -27,6 +28,8 @@ link-config() {
 link-config "$sway_dir" "$config_dir/sway"
 # Waybar only reads its default config location when sway launches it as the bar.
 link-config "$sway_dir/waybar" "$config_dir/waybar"
+# dunst is shared with i3 and lives next to this directory.
+link-config "$(dirname "$sway_dir")/dunst" "$config_dir/dunst"
 
 
 # ==============================================================================
