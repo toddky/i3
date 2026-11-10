@@ -8,8 +8,9 @@
 	min-height: 0;
 }
 
+/* A shade darker than $unfocused-bg-color, so unfocused workspace buttons still stand out */
 window#waybar {
-	background-color: #000000;
+	background-color: #121a26;
 	color: #f0f0f0;
 }
 
