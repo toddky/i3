@@ -1,0 +1,66 @@
+/* SWAY: Waybar styling; the colors match the color block in common.conf. */
+
+* {
+	font-family: "DejaVu Sans Mono", monospace;
+	font-size: 10pt;
+	border: none;
+	border-radius: 0;
+	min-height: 0;
+}
+
+window#waybar {
+	background-color: #000000;
+	color: #f0f0f0;
+}
+
+/* Workspaces: focused matches $focused-bg-color, the rest $unfocused-bg-color */
+#workspaces button {
+	padding: 0 8px;
+	color: #a0aab8;
+	background-color: #1b2533;
+	border: 1px solid #0a0f1a;
+}
+
+#workspaces button.visible {
+	color: #d0d6de;
+	background-color: #26354a;
+}
+
+#workspaces button.focused {
+	color: #f0f0f0;
+	background-color: #3567a8;
+}
+
+#workspaces button.urgent {
+	color: #f0f0f0;
+	background-color: #f04040;
+}
+
+/* Resize, layout and launcher modes: $mode-color */
+#mode {
+	padding: 0 8px;
+	color: #f0f0f0;
+	background-color: #b5651d;
+}
+
+/* Status blocks, spaced like i3blocks' separator_block_width=15 */
+#pulseaudio,
+#network,
+#custom-bandwidth,
+#custom-vpn,
+#cpu,
+#custom-load,
+#custom-battery,
+#custom-bluetooth,
+#clock,
+#tray {
+	padding: 0 7px;
+}
+
+#custom-battery.urgent {
+	background-color: #f04040;
+}
+
+#tray > .needs-attention {
+	background-color: #f04040;
+}

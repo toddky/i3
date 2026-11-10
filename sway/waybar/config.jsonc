@@ -1,0 +1,105 @@
+// SWAY: Waybar replaces swaybar because swaybar can't open tray-icon menus.
+// sway/config launches this through swaybar_command; i3 keeps i3bar + i3blocks.
+// The blocks mirror ~/.config/i3/i3blocks.conf: built-in modules where Waybar
+// has one, and the i3-status-* scripts through waybar-i3blocks otherwise.
+{
+	"position": "bottom",
+	"height": 24,
+	"spacing": 0,
+
+	"modules-left": ["sway/workspaces", "sway/mode"],
+	"modules-right": [
+		"pulseaudio",
+		"network",
+		"custom/bandwidth",
+		"custom/vpn",
+		"cpu",
+		"custom/load",
+		"custom/battery",
+		"custom/bluetooth",
+		"clock#date",
+		"clock#time",
+		"tray"
+	],
+
+	"sway/workspaces": {
+		"disable-scroll": true
+	},
+
+	"sway/mode": {
+		"tooltip": false
+	},
+
+	"pulseaudio": {
+		"format": "🎵{volume}%",
+		"format-muted": "🎵 mute",
+		"tooltip": false
+	},
+
+	"network": {
+		"format-wifi": "📶{signalStrength}%",
+		"format-ethernet": "📶 wired",
+		"format-disconnected": "📶 down",
+		"tooltip-format": "{ifname} {ipaddr}"
+	},
+
+	"custom/bandwidth": {
+		"exec": "waybar-i3blocks i3-status-bandwidth",
+		"return-type": "json",
+		"interval": 5,
+		"tooltip": false
+	},
+
+	"custom/vpn": {
+		"exec": "waybar-i3blocks i3-status-vpn",
+		"return-type": "json",
+		"interval": 10,
+		"tooltip": false
+	},
+
+	"cpu": {
+		"format": "🖥️ {usage:>3}%",
+		"interval": 10,
+		"tooltip": false
+	},
+
+	"custom/load": {
+		"exec": "cut -d' ' -f1 /proc/loadavg",
+		"format": "⏱️ {}",
+		"interval": 10,
+		"tooltip": false
+	},
+
+	"custom/battery": {
+		"exec": "waybar-i3blocks i3-status-battery",
+		"return-type": "json",
+		"interval": 30,
+		"tooltip": false
+	},
+
+	// Must match BAR_SIGNAL in sway-bluetooth-picker, which refreshes this after a change.
+	"custom/bluetooth": {
+		"exec": "waybar-i3blocks i3-status-bluetooth",
+		"return-type": "json",
+		"interval": 5,
+		"signal": 12,
+		"on-click": "setsid -f sway-bluetooth-picker",
+		"tooltip": false
+	},
+
+	"clock#date": {
+		"format": "📅 {:%Y-%m-%d %A}",
+		"interval": 60,
+		"tooltip": false
+	},
+
+	"clock#time": {
+		"format": "⏰ {:%H:%M:%S}",
+		"interval": 1,
+		"tooltip": false
+	},
+
+	"tray": {
+		"spacing": 6
+	}
+}
