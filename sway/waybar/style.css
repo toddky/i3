@@ -14,8 +14,10 @@ window#waybar {
 }
 
 /* Workspaces: focused matches $focused-bg-color, the rest $unfocused-bg-color */
+/* GTK themes give buttons a minimum width and extra padding; zero them for narrow buttons */
 #workspaces button {
-	padding: 0 8px;
+	padding: 0 4px;
+	min-width: 0;
 	color: #a0aab8;
 	background-color: #1b2533;
 	border: 1px solid #0a0f1a;
@@ -43,7 +45,7 @@ window#waybar {
 	background-color: #b5651d;
 }
 
-/* Status blocks, spaced like i3blocks' separator_block_width=15 */
+/* Status blocks: 4px on each side, so 8px between neighbors */
 #pulseaudio,
 #network,
 #custom-bandwidth,
@@ -54,7 +56,7 @@ window#waybar {
 #custom-bluetooth,
 #clock,
 #tray {
-	padding: 0 7px;
+	padding: 0 4px;
 }
 
 #custom-battery.urgent {
