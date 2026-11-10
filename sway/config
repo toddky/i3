@@ -21,6 +21,12 @@ include ../common.conf
 titlebar_border_thickness 2
 titlebar_padding 10 4
 
+# SWAY: Run Waybar instead of swaybar for common.conf's bar; swaybar can't open
+# tray-icon menus. Sway still starts it, and restarts it on reload. Sway treats
+# this as one program name and adds only -b bar-0, so -c/-s can't be passed and
+# Waybar reads ~/.config/waybar, which setup.sh links to sway/waybar.
+bar bar-0 swaybar_command waybar
+
 # SWAY: Replace common.conf's plain resize-mode bindings (unbind first, since
 # sway warns about overwritten bindings): enter only on a floating window (on a
 # tiled one the criteria match nothing, so sway skips the whole command), and
