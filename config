@@ -18,6 +18,14 @@
 # ==============================================================================
 # INCLUDE
 # ==============================================================================
+# i3 reads this file's own variables before the include, so variables set only in
+# common.conf never reach the lines below. Set the ones this file uses here too;
+# keep them matching common.conf.
+set $alt Mod1
+set $mod Mod4
+set $exec exec --no-startup-id
+set $ws2 2
+
 # Shared with sway; defines $mod, $alt, $exec and $ws1..$ws10, so it must come first.
 include common.conf
 
