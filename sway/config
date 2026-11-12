@@ -53,8 +53,8 @@ mode "$mode_resize" {
 # xdg-desktop-portal picks the wlr backend (Zoom/browser screen sharing).
 # Same as /etc/sway/config.d/50-systemd-user.conf, which this config doesn't
 # include, plus XDG_CURRENT_DESKTOP (the user manager outlives logout and
-# would otherwise keep i3's value).
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+# would otherwise keep i3's value). exec_always so a reload repairs it after another sway session overwrote it.
+exec_always dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
