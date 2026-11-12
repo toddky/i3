@@ -73,9 +73,6 @@ for_window [class="zoom"] floating enable
 # Option B: float only dialogs/popups, keep the main meeting window tiled.
 #for_window [class="zoom" title="^(?!Zoom Meeting).*"] floating enable
 
-# Open workspace
-bindsym $mod+s exec --no-startup-id i3-rofi-workspace
-
 # A less useful, but rather funny example:
 # makes the window floating as soon as I change
 # directory to ~/work
@@ -83,9 +80,6 @@ for_window [title="x200: ~/work"] floating enable
 
 # Notes
 bindsym $mod+Return [class="obsidian"] scratchpad show
-
-# Send and open scratchpad
-bindsym $mod+y exec i3-scratchpad-hide
 
 set $refresh_i3status killall -SIGUSR1 i3status
 
@@ -121,40 +115,11 @@ bindsym $mod+Shift+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
 # read 1 character and go to the window with the character
 bindsym $mod+m exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
-# Quickly jump to mark
-bindsym $mod+$alt+b exec "i3-focus-mark b"
-bindsym $mod+$alt+c exec "i3-focus-mark c"
-bindsym $mod+$alt+d exec "i3-focus-mark d"
-bindsym $mod+$alt+e exec "i3-focus-mark e"
-bindsym $mod+$alt+f exec "i3-focus-mark f"
-bindsym $mod+$alt+g exec "i3-focus-mark g"
-bindsym $mod+$alt+h exec "i3-focus-mark h"
-bindsym $mod+$alt+i exec "i3-focus-mark i"
-bindsym $mod+$alt+j exec "i3-focus-mark j"
-bindsym $mod+$alt+k exec "i3-focus-mark k"
-bindsym $mod+$alt+l exec "i3-focus-mark l"
-bindsym $mod+$alt+m exec "i3-focus-mark m"
-bindsym $mod+$alt+n exec "i3-focus-mark n"
-bindsym $mod+$alt+o exec "i3-focus-mark o"
-bindsym $mod+$alt+p exec "i3-focus-mark p"
-bindsym $mod+$alt+q exec "i3-focus-mark q"
-bindsym $mod+$alt+r exec "i3-focus-mark r"
-bindsym $mod+$alt+s exec "i3-focus-mark s"
-bindsym $mod+$alt+t exec "i3-focus-mark t"
-bindsym $mod+$alt+u exec "i3-focus-mark u"
-bindsym $mod+$alt+v exec "i3-focus-mark v"
-bindsym $mod+$alt+w exec "i3-focus-mark w"
-bindsym $mod+$alt+x exec "i3-focus-mark x"
-bindsym $mod+$alt+y exec "i3-focus-mark y"
-bindsym $mod+$alt+z exec "i3-focus-mark z"
-
 
 # ==============================================================================
 # SPECIAL
 # ==============================================================================
 bindsym $mod+a exec --no-startup-id i3-gather "$ws2"
-
-bindsym $mod+$alt+a exec --no-startup-id i3-setup-monitors
 
 bindsym --release $mod+e exec --no-startup-id i3-screenshot
 
