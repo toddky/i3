@@ -15,6 +15,7 @@
 		"custom/vpn",
 		"cpu",
 		"custom/load",
+		"memory",
 		"custom/battery",
 		"custom/bluetooth",
 		"clock#date",
@@ -69,6 +70,13 @@
 	"custom/load": {
 		"exec": "cut -d' ' -f1 /proc/loadavg",
 		"format": "⏱️ {}",
+		"interval": 10,
+		"tooltip": false
+	},
+
+	// used is total minus available, in GiB (what free -h calls Gi), matching the i3blocks [memory] block.
+	"memory": {
+		"format": "🧠 {used:0.1f}/{total:0.1f}",
 		"interval": 10,
 		"tooltip": false
 	},
