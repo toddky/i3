@@ -113,6 +113,7 @@ for_window [app_id="^brave-kjbdgfilnfhdoflbpgamdcdgpehopbep-Default$"] move cont
 for_window [app_id="^Alacritty$"]                                move container to workspace $ws2
 for_window [app_id="^(gnome-terminal-server|org.gnome.Terminal)$"] move container to workspace $ws2
 for_window [app_id="^kitty$"]                                    move container to workspace $ws2
+for_window [app_id="^com.mitchellh.ghostty$"]                    move container to workspace $ws2
 
 # Automatically assign Chrome/Brave windows to workspace by "<n>:" title prefix
 for_window [app_id="^(google-chrome|brave-browser)$" title="^1:"]  move container to workspace $ws1
@@ -147,6 +148,7 @@ for_window [class="^Spotify$"]                                     title_format 
 # Scratch terminal
 for_window [app_id="^Alacritty$"                                  title="^scratchpad$"] move scratchpad
 for_window [app_id="^(gnome-terminal-server|org.gnome.Terminal)$" title="^scratchpad$"] move scratchpad
+for_window [app_id="^com.mitchellh.ghostty$"                      title="^scratchpad$"] move scratchpad
 
 # Popup menus (sway-bluetooth-picker): wofi --normal-window floats; the picker moves it next to the clicked bar icon.
 for_window [app_id="^wofi$"] floating enable, sticky enable, border none
